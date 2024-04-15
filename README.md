@@ -1,0 +1,1 @@
+# SpartaTeam14-MiniProject
