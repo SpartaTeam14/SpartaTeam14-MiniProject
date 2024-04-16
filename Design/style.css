@@ -1,4 +1,31 @@
-body, ul, h2, p {
+@font-face {
+    font-family: "NIXGONFONTS_B";
+    src: url("./font/NIXGONFONTS_B.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "NIXGONFONTS_L";
+    src: url("./font/NIXGONFONTS_L.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "NIXGONFONTS_M";
+    src: url("./font/NIXGONFONTS_M.ttf") format("truetype");
+}
+
+* {
+    font-family: "NIXGONFONTS_M";
+}
+
+input[type="password"] {
+    /* 비밀번호 입력란에 적용되는 공통 스타일 */
+    font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
+}
+
+form body,
+ul,
+h2,
+p {
     margin: 0;
     padding: 0;
 }
@@ -8,7 +35,7 @@ li {
 }
 
 body {
-    background-color: white;
+    background-color: #F2EFEB;
     color: #999;
 }
 
@@ -17,6 +44,53 @@ body {
     height: 100vh;
     justify-content: center;
     align-items: center;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    /* width: 100% */
+    left: 0;
+    right: 0;
+    background-color: #D9BDAD;
+}
+
+nav {
+    background-color: var(--color-deepblue);
+}
+
+#nav-title {
+    color: #594539;
+    font-weight: 700;
+    font-size: 21px;
+}
+
+#nav-title:hover {
+    cursor: default;
+}
+
+#test {
+    width: 80%;
+    /* Adjust the width as needed */
+    margin: 0 auto;
+    /* Center the div horizontally */
+    padding-top: 100px;
+    /* Ensure content below the fixed header is visible */
+}
+
+.navbar-nav .nav-item>a {
+    color: #594539;
+    opacity: 0.5;
+    transition: all .5s ease-in-out;
+}
+
+.navbar-nav .nav-item>a:hover {
+    opacity: 1;
+}
+
+.navbar-nav .nav-item .active {
+    opacity: 1;
+    font-weight: 700;
 }
 
 .team {
@@ -28,7 +102,7 @@ body {
 .team-item {
     flex-basis: 100px;
     flex-shrink: 0;
-    margin: 0 4px;
+    margin: 0 30px;
     opacity: 0.4;
     transition: all .4s;
 }
@@ -52,10 +126,14 @@ body {
 .profile:before {
     content: ' ';
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.95+100 */
-background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.95) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.95) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#f2000000',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#f2000000', GradientType=0);
+    /* IE6-9 */
     position: absolute;
     left: 0;
     right: 0;
@@ -117,12 +195,112 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
     margin-top: 0.4em;
 }
 
+.team-introduction {
+    display: flex;
+    justify-content: space-between;
+}
 
+.team-photo {
+    flex: 0 0 50%;
+}
 
+.team-photo img {
+    width: 500px;
+    margin: 40px 0px 30px 150px;
+}
 
+.team-description {
+    flex: 0 0 50%;
+    margin: auto;
+}
 
+.bar-bg {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    bottom: 0;
+    left: 0;
+    background-color: #F2DCC9;
+}
 
+.bar-ing {
+    position: absolute;
+    height: 5px;
+    bottom: 0;
+    left: 0;
+    background-color: #594539;
+}
 
+/* 모달창 기본 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    border-radius: 10px; 
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); 
+}
 
+/* 모달창 내용 스타일 */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 1%;
+    border: 1px solid #888;
+    width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+/* 여백조정 */
+.input-container {
+    margin-bottom: 10px;
+    /* 원하는 여백 크기로 조정 */
+}
 
+.input-container input{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.row {
+    display: flex;
+    padding: 10px 0;
+}
+
+.memberAdd{
+    width: 400px;
+    margin: 0 auto;
+}
+
+.title_content{
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+}
+.txtfield{
+    width: 300px;
+    height: 38px;
+    font-size: 13px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.txtfield.big{
+	height: 150px;
+}
+.title_content.big{
+	height: 150px;
+}
+
+textarea {
+    resize: none; 
+}
