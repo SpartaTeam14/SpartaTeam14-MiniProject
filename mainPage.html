@@ -129,6 +129,25 @@
         <a href="#" id="loginBtn">로그인</a>
     </div>
 
+    <!-- 자기소개페이지 테스트 버튼-->
+    <div>
+        <a href="#" id="detailBtn">자기소개페이지 테스트</a>
+    </div>
+
+    <!-- 자기소개페이지 모달 -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <form id="signupForm">
+                <h1>자기소개페이지</h1>
+                <div>email: <input type="email" id="signUpEmail" /></div>
+                <div>Password: <input type="password" id="signUpPassword" required></div>
+                <div>재확인: <input type="password" id="signUpCheckPassword" required></div>
+                <button type="submit" id="signUpButton" class="disabled" disabled>회원가입 하기</button>
+                <button type="button" class="modal-button" onclick="closeModal('detailModal')">취소</button>
+            </form>
+        </div>
+    </div>
+
     <!-- 회원가입 모달 -->
     <div id="signupModal" class="modal">
         <div class="modal-content">
@@ -158,7 +177,6 @@
         </div>
     </div>
 
-
     <script>
 
         // 모달 열기
@@ -177,6 +195,9 @@
         });
         document.getElementById('loginBtn').addEventListener('click', function () {
             openModal('loginModal');
+        });
+        document.getElementById('detailBtn').addEventListener('click', function () {
+            openModal('detailModal'); 
         });
     </script>
 
