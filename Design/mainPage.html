@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인페이지</title>
     <style>
-        /* 모달창 기본 스타일 */
+        /* 모달창 */
         .modal {
             display: none;
             position: fixed;
@@ -19,7 +19,7 @@
             background-color: rgba(0, 0, 0, 0.4);
         }
 
-        /* 모달창 내용 스타일 */
+        /* 모달창 내용 */
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto;
@@ -29,7 +29,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        /* 버튼 스타일 */
+        /* 공통 버튼 */
         .modal-button {
             cursor: pointer;
             padding: 10px 20px;
@@ -39,7 +39,7 @@
             outline: none;
         }
 
-        /* 네비게이션 바 스타일 */
+        /* 네비게이션 바 */
         .navbar {
             width: 100%;
             background-color: #333;
@@ -61,20 +61,19 @@
         <a href="#" id="loginBtn">로그인</a>
     </div>
 
-    <!-- 회원가입 모달 -->
-    <div id="signupModal" class="modal">
+      <!-- 회원가입 모달 -->
+      <div id="signupModal" class="modal">
         <div class="modal-content">
-            <form>
+            <form id="signupForm">
                 <h1>회원가입</h1>
                 <div>email: <input type="email" id="signUpEmail" /></div>
-                <div>password: <input type="password" id="signUpPassword" /></div>
-                <div>재확인: <input type="password" id="signUpCheckPassword" /></div>
-                <button type="submit" id="signUpButton">회원가입 하기</button>
+                <div>Password: <input type="password" id="signUpPassword" required></div>
+                <div>재확인: <input type="password" id="signUpCheckPassword" required></div>
+                <button type="submit" id="signUpButton" class="disabled" disabled>회원가입 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
             </form>
         </div>
     </div>
-
     <!-- 로그인 모달 -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -100,6 +99,42 @@
         }
 
         // 이벤트 리스너
+        document.getElementById('signupBtn').addEventListener('click', function() {
+            openModal('signupModal');
+        });
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            openModal('loginModal');
+        });
+    </script>
+
+    
+
+    <script>
+        const signUpPassword = document.getElementById('signUpPassword');
+        const signUpCheckPassword = document.getElementById('signUpCheckPassword');
+        const signUpButton = document.getElementById('signUpButton');
+
+        function validatePasswords() {
+            if (signUpPassword.value === signUpCheckPassword.value && signUpPassword.value !== '') {
+                signUpButton.disabled = false;
+                signUpButton.classList.remove('disabled');
+            } else {
+                signUpButton.disabled = true;
+                signUpButton.classList.add('disabled');
+            }
+        }
+
+        signUpPassword.addEventListener('input', validatePasswords);
+        signUpCheckPassword.addEventListener('input', validatePasswords);
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
         document.getElementById('signupBtn').addEventListener('click', function() {
             openModal('signupModal');
         });
