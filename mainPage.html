@@ -39,6 +39,16 @@
             border: none;
             outline: none;
         }
+        /* 자기소개페이지 모달버튼 */
+        .modal-button-detail {
+            cursor: pointer;
+            padding: 12px;
+            margin: 10px 5px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            border: none;
+            outline: none;
+        }
 
         /* 네비게이션 바 */
         .navbar {
@@ -137,15 +147,29 @@
     <!-- 자기소개페이지 모달 -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
-            <form id="signupForm">
-                <h1>자기소개페이지</h1>
-                <div><img class="profile-picture" src="Design/images/green.png"alt="프로필 사진" /></div>
-                <div>이름 : <input type="email" id="signUpEmail" /></div>
-                <div>MBTI : <input type="password" id="signUpPassword" required></div>
-                <div>블로그 주소 : <input type="password" id="signUpCheckPassword" required></div>
-                <button type="submit" id="signUpButton" class="disabled" disabled>회원가입 하기</button>
-                <button type="button" class="modal-button" onclick="closeModal('detailModal')">취소</button>
-            </form>
+                <h1>자기소개페이지
+                    <div style="text-align:right">
+                        <button type="button" class="modal-button-detail">수정</button>
+                        <button type="button" class="modal-button-detail">삭제</button>
+                    </div>
+                </h1>
+            <div>
+            <div style="display:inline-block; vertical-align:top;">
+                <img class="profile-picture" src="Design/images/green.png"alt="프로필 사진" width="150px" height="230px"/>
+            </div>
+            <div style = "display:inline-block"> 
+                <div>이름 : </div>
+                <div>MBTI : </div>
+                <div>블로그 주소 : </div>
+            </div>
+            </div>
+            <br>
+            <div>자신의 장점</div>
+            <br>
+            <div>자신의 협업 스타일</div>
+            <div style="text-align:center">
+                <button type="button" class="modal-button" onclick="closeModal('detailModal')">닫기</button>
+            </div>
         </div>
     </div>
 
