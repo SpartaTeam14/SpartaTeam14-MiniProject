@@ -59,27 +59,28 @@
 </head>
 
 <body>
-    <!-- firebase -->
+    <!-- firebase 콘솔 -->
     <script type="module">
         import firebaseConfig from './firebaseConfig.js';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-    
+        import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-    
-        document.getElementById('signupForm').addEventListener('submit', async function(event) {
+
+        // 회원가입
+        document.getElementById('signupForm').addEventListener('submit', async function (event) {
             event.preventDefault();
             const email = document.getElementById('signUpEmail').value;
             const password = document.getElementById('signUpPassword').value;
             const passwordConfirm = document.getElementById('signUpCheckPassword').value;
-    
+
             if (password !== passwordConfirm) {
                 console.log("실패: 비밀번호가 일치하지 않습니다.");
                 alert('비밀번호가 일치하지 않습니다.');
                 return;
             }
-    
+
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 console.log("성공: 회원가입 성공", userCredential);
@@ -90,8 +91,36 @@
                 alert('회원가입 실패: ' + error.message);
             }
         });
+
+        // 로그인
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                console.log("성공: 로그인 성공", userCredential);
+                closeModal('loginModal');
+            } catch (error) {
+                console.log("실패: 로그인 에러", error);
+                const loginError = document.getElementById('loginError');
+                loginError.textContent = "이메일 또는 비밀번호를 다시 입력해주세요.";
+                loginError.style.display = 'block';
+            }
+        });
+
+        function validateLoginButton() {
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            const signInButton = document.getElementById('signInButton');
+            signInButton.disabled = !(email && password);
+        }
+
+        document.getElementById('signInEmail').addEventListener('input', validateLoginButton);
+        document.getElementById('signInPassword').addEventListener('input', validateLoginButton);
     </script>
-    
+
 
     <div class="navbar">
         <a href="#" id="signupBtn">회원가입</a>
@@ -115,15 +144,17 @@
     <!-- 로그인 모달 -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <form>
+            <form id="loginForm">
+
                 <h1>로그인</h1>
-                <div>email: <input type="email" id="signInEmail" /></div>
-                <div>password: <input type="password" id="signInPassword" /></div>
-                <button type="submit" id="signInButton">로그인 하기</button>
+                <div>Email: <input type="email" id="signInEmail" /></div>
+                <div>Password: <input type="password" id="signInPassword" /></div>
+                <button type="submit" id="signInButton" disabled>로그인 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
             </form>
         </div>
     </div>
+
 
     <script>
 
