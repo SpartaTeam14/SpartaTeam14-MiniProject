@@ -245,7 +245,7 @@ nav {
     /* 원하는 여백 크기로 조정 */
 }
 
-.input-container input {
+.input-container input{
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -281,4 +281,8 @@ nav {
 }
 .title_content.big{
 	height: 150px;
+}
+
+textarea {
+    resize: none; 
 }

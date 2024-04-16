@@ -198,30 +198,33 @@
     <div id="memberaddModal" class="modal">
         <div class="modal-content">
             <form class = "memberAdd">
-                <h1>멤버추가</h1>
+                <div class="modal-header">
+                    <h1>멤버추가</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('memberaddModal')"></button>
+                </div>
                 <div class="row">
                     <span class="title_content">이미지 url</span>
-                    <input class="txtfield" type="url" id="signInEmail"/>
+                    <input class="txtfield" type="url" id="imgurl"/>
                 </div>
                 <div class="row">
                     <span class="title_content">이름</span>
-                    <input class="txtfield" type="text" id="signInPassword"/>
+                    <input class="txtfield" type="text" id="name"/>
                 </div>
                 <div class="row">
                     <span class="title_content">mbti</span>
-                    <input class="txtfield" type="text" id="signInPassword"/>
+                    <input class="txtfield" type="text" id="mbti"/>
                 </div>
                 <div class="row">
                     <span class="title_content">블로그 주소</span>
-                    <input class="txtfield" type="text" id="signInPassword"/>
+                    <input class="txtfield" type="text" id="blogaddress"/>
                 </div>
                 <div class="row">
                     <span class="title_content big">자신의 장점</span>
-                    <input class="txtfield big" type="text" id="signInPassword"/>
+                    <textarea class="txtfield big" id="strengths"></textarea>
                 </div>
                 <div class="row">
                     <span class="title_content big">자신의 협업스타일</span>
-                    <input class="txtfield big" type="text" id="signInPassword"/>
+                    <textarea class="txtfield big" id="Collaboration"></textarea>
                 </div>
                 <button type="submit" id="memberAddButton">등록하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('memberaddModal')">취소</button>
