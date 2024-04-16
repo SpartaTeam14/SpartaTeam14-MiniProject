@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
 body, ul, h2, p {
     margin: 0;
     padding: 0;
@@ -28,7 +30,7 @@ body {
 .team-item {
     flex-basis: 100px;
     flex-shrink: 0;
-    margin: 0 4px;
+    margin: 0 30px;
     opacity: 0.4;
     transition: all .4s;
 }
@@ -117,12 +119,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
     margin-top: 0.4em;
 }
 
+.team-introduction {
+    display: flex;
+    justify-content: space-between;
+}
 
+.team-photo {
+    flex: 0 0 50%;
+}
 
+.team-photo img {
+    width: 500px;
+    margin: 40px 0px 30px 150px;
+}
 
-
-
-
-
-
-
+.team-description {
+    flex: 0 0 50%;
+    margin: auto;
+    font-family: "Jua", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
