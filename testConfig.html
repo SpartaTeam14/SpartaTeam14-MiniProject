@@ -1,20 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Firebaseconfig파일 참고용</title>
 </head>
+
 <body>
+
+    <form>
+        <h1>회원가입</h1>
+        <div> email : <input type="email" id="signUpEmail" /> </div>
+        <div> password : <input type="password" id="signUpPassword" /> </div>
+        <button type="submit" id="signUpButton">회원가입 하기</button>
+        <button>로그인 하러 가기</button>
+
+    </form>
+
+    <form>
+        <h1>로그인</h1>
+        <div> email : <input type="email" id="signInEmail" /> </div>
+        <div> password : <input type="password" id="signInPassword" /> </div>
+        <button type="submit" id="signInButton">로그인 하기</button>
+        <button>회원가입 하러 가기</button>
+
+    </form>
 
     <script type="module">
         import firebaseConfig from './firebaseConfig.js';
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
         // 이 아래에는 import { initializeApp } 등 firebase 초기 설정들 넣기...
-        
+
         // 여기서 강의에 나왔던 config를 대체해서 사용 (Firebase 초기화)
         const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
         //dp = getFirestore등등..추가해가면서 사용하면 됨.
+        console.log('hello')
     </script>
+
 </body>
+
 </html>
