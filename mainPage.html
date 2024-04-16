@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,6 +49,7 @@
             padding: 15px 0;
             text-align: center;
         }
+
         .navbar a {
             padding: 12px;
             text-decoration: none;
@@ -55,14 +57,49 @@
         }
     </style>
 </head>
+
 <body>
+    <!-- firebase -->
+    <script type="module">
+        import firebaseConfig from './firebaseConfig.js';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+    
+        document.getElementById('signupForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            const passwordConfirm = document.getElementById('signUpCheckPassword').value;
+    
+            if (password !== passwordConfirm) {
+                console.log("실패: 비밀번호가 일치하지 않습니다.");
+                alert('비밀번호가 일치하지 않습니다.');
+                return;
+            }
+    
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                console.log("성공: 회원가입 성공", userCredential);
+                alert('회원가입 성공! 유저 ID: ' + userCredential.user.uid);
+                closeModal('signupModal');
+            } catch (error) {
+                console.log("실패: 회원가입 에러", error);
+                alert('회원가입 실패: ' + error.message);
+            }
+        });
+    </script>
+    
+
     <div class="navbar">
         <a href="#" id="signupBtn">회원가입</a>
         <a href="#" id="loginBtn">로그인</a>
     </div>
 
-      <!-- 회원가입 모달 -->
-      <div id="signupModal" class="modal">
+    <!-- 회원가입 모달 -->
+    <div id="signupModal" class="modal">
         <div class="modal-content">
             <form id="signupForm">
                 <h1>회원가입</h1>
@@ -74,6 +111,7 @@
             </form>
         </div>
     </div>
+
     <!-- 로그인 모달 -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -88,6 +126,7 @@
     </div>
 
     <script>
+
         // 모달 열기
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
@@ -99,15 +138,14 @@
         }
 
         // 이벤트 리스너
-        document.getElementById('signupBtn').addEventListener('click', function() {
+        document.getElementById('signupBtn').addEventListener('click', function () {
             openModal('signupModal');
         });
-        document.getElementById('loginBtn').addEventListener('click', function() {
+        document.getElementById('loginBtn').addEventListener('click', function () {
             openModal('loginModal');
         });
     </script>
 
-    
 
     <script>
         const signUpPassword = document.getElementById('signUpPassword');
@@ -118,9 +156,13 @@
             if (signUpPassword.value === signUpCheckPassword.value && signUpPassword.value !== '') {
                 signUpButton.disabled = false;
                 signUpButton.classList.remove('disabled');
+                console.log("성공");
+
             } else {
                 signUpButton.disabled = true;
                 signUpButton.classList.add('disabled');
+                console.log("실패");
+
             }
         }
 
@@ -135,12 +177,13 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        document.getElementById('signupBtn').addEventListener('click', function() {
+        document.getElementById('signupBtn').addEventListener('click', function () {
             openModal('signupModal');
         });
-        document.getElementById('loginBtn').addEventListener('click', function() {
+        document.getElementById('loginBtn').addEventListener('click', function () {
             openModal('loginModal');
         });
     </script>
 </body>
+
 </html>
