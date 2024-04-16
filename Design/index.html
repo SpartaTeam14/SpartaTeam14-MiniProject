@@ -1,61 +1,294 @@
 <!doctype html>
 <html>
-    <head>
-        <title>14조</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <!-- 깃 푸시 테스트-->
-        <div class="wrapper">
-            <ul class="team">
-                <li class="team-item">
-                    <div class="profile profile_red">
-                        <img src="images/red.png">
-                        <div class="profile-contents">
-                            <h2>Liam <span>CEO</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="team-item">
-                    <div class="profile profile_beige">
-                        <img src="images/doggy.png">
-                        <div class="profile-contents">
-                            <h2>Coco <span>Mood Maker</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="team-item">
-                    <div class="profile profile_green">
-                        <img src="images/green.png">
-                        <div class="profile-contents">
-                            <h2>Olivia <span>Designer</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="team-item">
-                    <div class="profile profile_pink">
-                        <img src="images/pink.png">
-                        <div class="profile-contents">
-                            <h2>James <span>Front-end</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="team-item">
-                    <div class="profile profile_purple">
-                        <img src="images/purple.png">
-                        <div class="profile-contents">
-                            <h2>Ella <span>Back-end</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
 
-        <script> </script>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>14조</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- firebase 콘솔 -->
+    <script type="module">
+        import firebaseConfig from '../firebaseConfig.js';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // 회원가입
+        document.getElementById('signupForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            const passwordConfirm = document.getElementById('signUpCheckPassword').value;
+
+            if (password !== passwordConfirm) {
+                console.log("실패: 비밀번호가 일치하지 않습니다.");
+                alert('비밀번호가 일치하지 않습니다.');
+                return;
+            }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                console.log("성공: 회원가입 성공", userCredential);
+                alert('회원가입 성공! 유저 ID: ' + userCredential.user.uid);
+                closeModal('signupModal');
+            } catch (error) {
+                console.log("실패: 회원가입 에러", error);
+                alert('회원가입 실패: ' + error.message);
+            }
+        });
+
+        // 로그인
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                console.log("성공: 로그인 성공", userCredential);
+                closeModal('loginModal');
+            } catch (error) {
+                console.log("실패: 로그인 에러", error);
+                const loginError = document.getElementById('loginError');
+                document.getElementById('loginError').style.display = 'block'; // 로그인 실패 메시지 표시
+
+                loginError.style.display = 'block';
+            }
+        });
+
+        function validateLoginButton() {
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            const signInButton = document.getElementById('signInButton');
+            signInButton.disabled = !(email && password);
+        }
+
+        document.getElementById('signInEmail').addEventListener('input', validateLoginButton);
+        document.getElementById('signInPassword').addEventListener('input', validateLoginButton);
+    </script>
+    <header>
+        <nav class="navbar navbar-expand-md bg-body-tertiary">
+            <div class="container-fluid">
+                <a id="nav-title" class="navbar-brand">꽁냥이</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#team">team_info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#member">memeber_info</a>
+                        </li>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" id="user">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#loginModal" id="loginBtn">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#registerModal" id="signupBtn">Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="bar-bg">
+            <span class="bar-ing"></span>
+        </div>
+    </header>
+    <form id ="team">
+        <button type="button" class="submit" id = "test">팀원 추가</button>
+    </form>
+    <div id="member" class="wrapper">
+        <ul class="team">
+            <li class="team-item">
+                <div class="profile profile_red">
+                    <img src="images/red.png">
+                    <div class="profile-contents">
+                        <h2>Liam <span>CEO</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="profile profile_beige">
+                    <img src="images/doggy.png">
+                    <div class="profile-contents">
+                        <h2>Coco <span>Mood Maker</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="profile profile_green">
+                    <img src="images/green.png">
+                    <div class="profile-contents">
+                        <h2>Olivia <span>Designer</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="profile profile_pink">
+                    <img src="images/pink.png">
+                    <div class="profile-contents">
+                        <h2>James <span>Front-end</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="profile profile_purple">
+                    <img src="images/purple.png">
+                    <div class="profile-contents">
+                        <h2>Ella <span>Back-end</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- 회원가입 모달 -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <form id="signupForm" class="register"> 
+                <h1>회원가입</h1>
+                <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
+                <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
+                <div class="input-container"><input type="password" id="signUpCheckPassword"
+                        placeholder="One more password" /></div>
+                <button type="submit" id="signUpButton">회원가입 하기</button>
+                <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 로그인 모달 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <form id="loginForm">
+        
+                <h1>로그인</h1>
+                <div class="input-container"><input type="email" id="signInEmail" placeholder="Email" /></div>
+                <div class="input-container"><input type="password" id="signInPassword" placeholder="Password" /></div>
+                <button type="submit" id="signInButton">로그인 하기</button>
+                <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 멤버추가 모달 -->
+    <div id="memberaddModal" class="modal">
+        <div class="modal-content">
+            <form class = "memberAdd">
+                <div class="modal-header">
+                    <h1>팀원 추가</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('memberaddModal')"></button>
+                </div>
+                <div class="row">
+                    <span class="title_content">이미지 url</span>
+                    <input class="txtfield" type="url" id="imgurl"/>
+                </div>
+                <div class="row">
+                    <span class="title_content">이름</span>
+                    <input class="txtfield" type="text" id="name"/>
+                </div>
+                <div class="row">
+                    <span class="title_content">mbti</span>
+                    <input class="txtfield" type="text" id="mbti"/>
+                </div>
+                <div class="row">
+                    <span class="title_content">블로그 주소</span>
+                    <input class="txtfield" type="text" id="blogaddress"/>
+                </div>
+                <div class="row">
+                    <span class="title_content big">자신의 장점</span>
+                    <textarea class="txtfield big" id="strengths"></textarea>
+                </div>
+                <div class="row">
+                    <span class="title_content big">자신의 협업스타일</span>
+                    <textarea class="txtfield big" id="Collaboration"></textarea>
+                </div>
+                <button type="submit" id="memberAddButton">등록하기</button>
+                <button type="button" class="modal-button" onclick="closeModal('memberaddModal')">취소</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        // 스크롤바
+        let scrollTop = 0;
+        let bar = document.getElementsByClassName("bar-ing")[0];
+
+        window.addEventListener(
+            "scroll",
+            () => {
+                scrollTop = document.documentElement.scrollTop;
+                let per = Math.ceil(
+                    (scrollTop / (document.body.scrollHeight - window.outerHeight)) * 100
+                );
+                bar.style.width = per + "%";
+            },
+            false
+        );
+        const signUpPassword = document.getElementById('signUpPassword');
+        const signUpCheckPassword = document.getElementById('signUpCheckPassword');
+        const signUpButton = document.getElementById('signUpButton');
+
+        function validatePasswords() {
+            if (signUpPassword.value === signUpCheckPassword.value && signUpPassword.value !== '') {
+                signUpButton.disabled = false;
+                signUpButton.classList.remove('disabled');
+                console.log("성공");
+
+            } else {
+                signUpButton.disabled = true;
+                signUpButton.classList.add('disabled');
+                console.log("실패");
+
+            }
+        }
+
+        signUpPassword.addEventListener('input', validatePasswords);
+        signUpCheckPassword.addEventListener('input', validatePasswords);
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        document.getElementById('signupBtn').addEventListener('click', function () {
+            openModal('signupModal');
+        });
+        document.getElementById('loginBtn').addEventListener('click', function () {
+            openModal('loginModal');
+        });
+
+        document.getElementById('test').addEventListener('click', function () {
+            openModal('memberaddModal');
+        });
+
+    </script>
+</body>
+
 </html>
