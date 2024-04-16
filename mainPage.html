@@ -98,6 +98,7 @@
             event.preventDefault();
             const email = document.getElementById('signInEmail').value;
             const password = document.getElementById('signInPassword').value;
+
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 console.log("성공: 로그인 성공", userCredential);
@@ -105,7 +106,8 @@
             } catch (error) {
                 console.log("실패: 로그인 에러", error);
                 const loginError = document.getElementById('loginError');
-                loginError.textContent = "이메일 또는 비밀번호를 다시 입력해주세요.";
+                document.getElementById('loginError').style.display = 'block'; // 로그인 실패 메시지 표시
+
                 loginError.style.display = 'block';
             }
         });
@@ -149,6 +151,7 @@
                 <h1>로그인</h1>
                 <div>Email: <input type="email" id="signInEmail" /></div>
                 <div>Password: <input type="password" id="signInPassword" /></div>
+                <p id="loginError" style="color: red; display: none;">이메일 또는 비밀번호를 다시 입력해주세요.</p>
                 <button type="submit" id="signInButton" disabled>로그인 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
             </form>
