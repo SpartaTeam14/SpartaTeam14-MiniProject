@@ -1,61 +1,170 @@
 <!doctype html>
 <html>
-    <head>
-        <title>14조</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
 
-        <div class="wrapper">
-            <ul class="team">
-                <li class="team-item">
-                    <div class="profile profile_red">
-                        <img src="images/red.png">
-                        <div class="profile-contents">
-                            <h2>Liam <span>CEO</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="team-item">
-                    <div class="profile profile_beige">
-                        <img src="images/doggy.png">
-                        <div class="profile-contents">
-                            <h2>Coco <span>Mood Maker</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="team-item">
-                    <div class="profile profile_green">
-                        <img src="images/green.png">
-                        <div class="profile-contents">
-                            <h2>Olivia <span>Designer</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="team-item">
-                    <div class="profile profile_pink">
-                        <img src="images/pink.png">
-                        <div class="profile-contents">
-                            <h2>James <span>Front-end</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="team-item">
-                    <div class="profile profile_purple">
-                        <img src="images/purple.png">
-                        <div class="profile-contents">
-                            <h2>Ella <span>Back-end</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>14조</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md bg-body-tertiary">
+            <div class="container-fluid">
+                <a id="nav-title" class="navbar-brand">꽁냥이</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#team">team_info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#member">memeber_info</a>
+                        </li>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" id="user">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#loginModal" id="loginBtn">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#registerModal" id="registerBtn">Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="bar-bg">
+            <span class="bar-ing"></span>
         </div>
+    </header>
 
-        <script> </script>
-    </body>
+    <div>
+        승훈님!!여기에요!!!
+    </div>
+    
+    <div id="member" class="wrapper">
+        <ul class="team">
+            <li class="team-item">
+                <div class="profile profile_red">
+                    <img src="images/red.png">
+                    <div class="profile-contents">
+                        <h2>Liam <span>CEO</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="profile profile_beige">
+                    <img src="images/doggy.png">
+                    <div class="profile-contents">
+                        <h2>Coco <span>Mood Maker</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="profile profile_green">
+                    <img src="images/green.png">
+                    <div class="profile-contents">
+                        <h2>Olivia <span>Designer</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="profile profile_pink">
+                    <img src="images/pink.png">
+                    <div class="profile-contents">
+                        <h2>James <span>Front-end</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+            <li class="team-item">
+                <div class="profile profile_purple">
+                    <img src="images/purple.png">
+                    <div class="profile-contents">
+                        <h2>Ella <span>Back-end</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- 회원가입 모달 -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <form class="register">
+                <h1>회원가입</h1>
+                <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
+                <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
+                <div class="input-container"><input type="password" id="signUpCheckPassword" placeholder="One more password" /></div>
+                <button type="submit" id="registerButton">회원가입 하기</button>
+                <button type="button" class="modal-button" onclick="closeModal('registerModal')">취소</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 로그인 모달 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <form>
+                <h1>로그인</h1>
+                <div class="input-container"><input type="email" id="signInEmail" placeholder="Email" /></div>
+                <div class="input-container"><input type="password" id="signInPassword"  placeholder="Password"/></div>
+                <button type="submit" id="loginButton">로그인 하기</button>
+                <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        // 스크롤바
+        let scrollTop = 0;
+        let bar = document.getElementsByClassName("bar-ing")[0];
+
+        window.addEventListener(
+            "scroll",
+            () => {
+                scrollTop = document.documentElement.scrollTop;
+                let per = Math.ceil(
+                    (scrollTop / (document.body.scrollHeight - window.outerHeight)) * 100
+                );
+                bar.style.width = per + "%";
+            },
+            false
+        );
+        // 모달 열기
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        // 모달 닫기
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // 이벤트 리스너
+        document.getElementById('registerBtn').addEventListener('click', function () {
+            openModal('registerModal');
+        });
+        document.getElementById('loginBtn').addEventListener('click', function () {
+            openModal('loginModal');
+        });
+    </script>
+</body>
+
 </html>
