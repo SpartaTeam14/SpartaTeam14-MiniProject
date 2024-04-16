@@ -17,9 +17,13 @@
     font-family: "NIXGONFONTS_M";
 }
 
-input[type="password"] {
+input[type="password"][type="email"] {
     /* 비밀번호 입력란에 적용되는 공통 스타일 */
     font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
+}
+
+.team-description p {
+    font-size: 22px; /* 여기에 적절한 폰트 크기를 입력하세요 */
 }
 
 form body,
@@ -206,7 +210,7 @@ nav {
 
 .team-photo img {
     width: 500px;
-    margin: 40px 0px 30px 150px;
+    margin: 100px 0px 30px 150px;
 }
 
 .team-description {
@@ -303,4 +307,20 @@ nav {
 
 textarea {
     resize: none; 
+}
+
+.membtn-container{
+    text-align: center;
+}
+#memberAddBtn {
+    background-color: #D9BDAD; /* 새로운 배경색 지정 */
+    color: white; /* 텍스트 색상을 밝게 설정하여 대비를 높임 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 20px; /* 적절한 패딩값 추가 (예시) */
+    border-radius: 5px; /* 버튼 모서리를 둥글게 만듦 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+}
+
+#memberAddBtn:hover {
+    background-color: #d9b29c; /* 마우스 오버 시 배경색 변경 */
 }
