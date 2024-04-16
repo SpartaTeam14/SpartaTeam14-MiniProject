@@ -105,7 +105,9 @@
                 updateUIOnLogin(userCredential.user); // 로그인 성공 시 UI 업데이트
             } catch (error) {
                 console.log("실패: 로그인 에러", error);
+                document.getElementById('loginError').textContent = '잘못된 이메일 또는 비밀번호입니다'
                 document.getElementById('loginError').style.display = 'block'; // 로그인 실패 메시지 표시
+                   
             }
         });
 
@@ -263,6 +265,8 @@
                 <div class="input-container"><input type="password" id="signInPassword" placeholder="Password" /></div>
                 <button type="submit" id="signInButton">로그인 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
+                <div id="loginError" style="color: red; display: none;">이메일 또는 비밀번호를 확인해주세요.</div>
+
             </form>
         </div>
     </div>
