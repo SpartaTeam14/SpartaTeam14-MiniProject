@@ -200,6 +200,20 @@ nav {
     justify-content: space-between;
 }
 
+.team-photo {
+    flex: 0 0 50%;
+}
+
+.team-photo img {
+    width: 500px;
+    margin: 40px 0px 30px 150px;
+}
+
+.team-description {
+    flex: 0 0 50%;
+    margin: auto;
+}
+
 .bar-bg {
     position: absolute;
     width: 100%;
