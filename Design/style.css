@@ -102,7 +102,7 @@ nav {
 .team-item {
     flex-basis: 100px;
     flex-shrink: 0;
-    margin: 0 4px;
+    margin: 0 30px;
     opacity: 0.4;
     transition: all .4s;
 }
@@ -195,6 +195,10 @@ nav {
     margin-top: 0.4em;
 }
 
+.team-introduction {
+    display: flex;
+    justify-content: space-between;
+}
 
 .bar-bg {
     position: absolute;
