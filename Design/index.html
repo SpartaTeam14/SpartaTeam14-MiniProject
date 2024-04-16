@@ -14,7 +14,7 @@
 <body>
     <!-- firebase 콘솔 -->
     <script type="module">
-        import firebaseConfig from './firebaseConfig.js';
+        import firebaseConfig from '../firebaseConfig.js';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
@@ -169,7 +169,7 @@
     <!-- 회원가입 모달 -->
     <div id="signupModal" class="modal">
         <div class="modal-content">
-            <form class="register">
+            <form id="signupForm" class="register"> 
                 <h1>회원가입</h1>
                 <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
@@ -184,7 +184,8 @@
     <!-- 로그인 모달 -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <form>
+            <form id="loginForm">
+        
                 <h1>로그인</h1>
                 <div class="input-container"><input type="email" id="signInEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signInPassword" placeholder="Password" /></div>
