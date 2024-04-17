@@ -18,10 +18,58 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        // 실시간으로 팀원 데이터를 로드
+        function listenToTeamMembers() {
+            const membersCol = collection(db, "member");
+            onSnapshot(membersCol, (snapshot) => {
+                const memberList = [];
+                snapshot.docs.forEach((doc) => {
+                    const data = doc.data();
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            memberList.push(data[key]);
+                        }
+                    }
+                });
+                updateTeamMemberUI(memberList);
+            });
+        }
+
+        // 문서 로드 완료 후 실시간 멤버 로드 실행
+        document.addEventListener('DOMContentLoaded', () => {
+            listenToTeamMembers();
+        });
+
+
+        function updateTeamMemberUI(members) {
+            const teamContainer = document.getElementById('member');
+            teamContainer.innerHTML = '';
+
+            Object.values(members).forEach(member => {
+                // 이미지 URL이 유효한지 확인하고, 없으면 기본이미지사용
+                const imageUrl = member.image || 'images/purple.png';
+
+                const memberHtml = `
+            <li class="team-item">
+                <div class="profile profile_purple"> 
+                    <img src="${imageUrl}">
+                    <div class="profile-contents">
+                        <h2>${member.name} <span>${member.mbti}</span></h2>
+                        <p>${member.strengths}</p>
+                    </div>
+                </div>
+            </li>`;
+                teamContainer.innerHTML += memberHtml;
+            });
+            console.log(member.mbti);
+        }
 
         // 팀원 데이터를 Firestore에 추가하는 함수
         async function addTeamMember() {
@@ -224,59 +272,9 @@
         <button type="button" id="memberAddBtn">팀원 추가</button>
     </div>
     <div id="member" class="wrapper">
-        <ul class="team">
-            <li class="team-item">
-                <div class="profile profile_red">
-                    <img src="images/red.png">
-                    <div class="profile-contents">
-                        <h2>Liam <span>CEO</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-            <li class="team-item">
-                <div class="profile profile_beige">
-                    <img src="images/doggy.png">
-                    <div class="profile-contents">
-                        <h2>Coco <span>Mood Maker</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-            <li class="team-item">
-                <div class="profile profile_green">
-                    <img src="images/green.png">
-                    <div class="profile-contents">
-                        <h2>Olivia <span>Designer</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-            <li class="team-item">
-                <div class="profile profile_pink">
-                    <img src="images/pink.png">
-                    <div class="profile-contents">
-                        <h2>James <span>Front-end</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-            <li class="team-item">
-                <div class="profile profile_purple">m
-                    <img src="images/purple.png">
-                    <div class="profile-contents">
-                        <h2>Ella <span>Back-end</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-        </ul>
+   </ul>
     </div>
+
     <!-- 회원가입 모달 -->
     <div id="signupModal" class="modal">
         <div class="modal-content">
@@ -421,8 +419,8 @@
             });
 
             const teamCards = document.querySelectorAll('.team-item');
-             // 각 카드에 클릭 이벤트 리스너 추가
-             teamCards.forEach(card => {
+            // 각 카드에 클릭 이벤트 리스너 추가
+            teamCards.forEach(card => {
                 card.addEventListener('click', () => {
                     // 카드에서 팀원의 이름을 추출
                     const name = card.querySelector('h2').textContent;
