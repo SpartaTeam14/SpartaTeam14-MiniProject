@@ -368,7 +368,7 @@
         let moveToTop = function () {
             document.body.scrollIntoView({ behavior: "smooth" });
         };
-        
+
         let moveToBottom = function () {
             document.body.scrollIntoView({ behavior: "smooth", block: "end" });
         };
@@ -414,13 +414,23 @@
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
         document.addEventListener('DOMContentLoaded', () => {
             const logoutLink = document.getElementById('logoutLink');
+
             logoutLink.addEventListener('click', function (event) {
                 event.preventDefault(); // 기본 앵커 클릭 동작 방지
                 logout();
             });
+
+            const teamCards = document.querySelectorAll('.team-item');
+             // 각 카드에 클릭 이벤트 리스너 추가
+             teamCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // 카드에서 팀원의 이름을 추출
+                    const name = card.querySelector('h2').textContent;
+                    alert('클릭한 팀원: ' + name);
+                });
+            });
         });
     </script>
-
 
 </body>
 
