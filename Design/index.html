@@ -9,6 +9,18 @@
 
     <title>14조</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 30px;
+        }
+
+        .membtn-container {
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,7 +58,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             listenToTeamMembers();
         });
-
 
         function updateTeamMemberUI(members) {
             const teamContainer = document.getElementById('member');
@@ -272,7 +283,7 @@
         <button type="button" id="memberAddBtn">팀원 추가</button>
     </div>
     <div id="member" class="wrapper">
-   </ul>
+        </ul>
     </div>
 
     <!-- 회원가입 모달 -->
@@ -424,7 +435,7 @@
                 card.addEventListener('click', () => {
                     // 카드에서 팀원의 이름을 추출
                     const name = card.querySelector('h2').textContent;
-                    alert('클릭한 팀원: ' + name);
+                    alert('클릭한 팀원: ' + member.name);
                 });
             });
         });
