@@ -9,6 +9,18 @@
 
     <title>14조</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 30px;
+        }
+
+        .membtn-container {
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,10 +29,91 @@
         import firebaseConfig from '../firebaseConfig.js';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
+        // 실시간으로 팀원 데이터를 로드
+        function listenToTeamMembers() {
+            const membersCol = collection(db, "member");
+            onSnapshot(membersCol, (snapshot) => {
+                const memberList = [];
+                snapshot.docs.forEach((doc) => {
+                    const data = doc.data();
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            memberList.push(data[key]);
+                        }
+                    }
+                });
+                updateTeamMemberUI(memberList);
+            });
+        }
+
+        // 문서 로드 완료 후 실시간 멤버 로드 실행
+        document.addEventListener('DOMContentLoaded', () => {
+            listenToTeamMembers();
+        });
+
+        function updateTeamMemberUI(members) {
+            const teamContainer = document.getElementById('member');
+            teamContainer.innerHTML = '';
+
+            Object.values(members).forEach(member => {
+                // 이미지 URL이 유효한지 확인하고, 없으면 기본이미지사용
+                const imageUrl = member.image || 'images/purple.png';
+
+                const memberHtml = `
+            <li class="team-item">
+                <div class="profile profile_purple"> 
+                    <img src="${imageUrl}">
+                    <div class="profile-contents">
+                        <h2>${member.name} <span>${member.mbti}</span></h2>
+                        <p>${member.strengths}</p>
+                    </div>
+                </div>
+            </li>`;
+                teamContainer.innerHTML += memberHtml;
+            });
+            console.log(member.mbti);
+        }
+
+        // 팀원 데이터를 Firestore에 추가하는 함수
+        async function addTeamMember() {
+            if (auth.currentUser) { // 사용자 로그인 상태 확인
+                const memberData = {
+                    blog: document.getElementById('blogaddress').value,
+                    collaboration: document.getElementById('Collaboration').value,
+                    image: document.getElementById('imgurl').value,
+                    mbti: document.getElementById('mbti').value,
+                    name: document.getElementById('name').value,
+                    strengths: document.getElementById('strengths').value
+                };
+
+                try {
+                    await setDoc(doc(db, "member", auth.currentUser.email), {
+                        [memberData.name]: memberData // 이름을 키로 사용하여 멤버 데이터 저장
+                    }, { merge: true });
+                    alert('팀원이 성공적으로 추가되었습니다.');
+                    closeModal('memberaddModal');
+                } catch (error) {
+                    console.error("팀원 추가 실패: ", error);
+                    alert('팀원 추가 실패: ' + error.message);
+                }
+            } else {
+                alert('로그인이 필요합니다.');
+            }
+        }
+
+        // 팀원 추가 폼 제출 이벤트 리스너
+        document.querySelector('.memberAdd').addEventListener('submit', function (event) {
+            event.preventDefault(); // 폼 기본 제출 방지
+            addTeamMember();
+        });
         // 회원가입
         document.getElementById('signupForm').addEventListener('submit', async function (event) {
             event.preventDefault();
@@ -45,7 +138,53 @@
             }
         });
 
-        // 로그인
+
+        // 로그인에 성공한 후 UI 업데이트 함수
+        function updateUIOnLogin(user) {
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            const userEmail = document.getElementById('userEmail');
+            const userEmailText = document.getElementById('userEmailText');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            // 로그인 및 회원가입 버튼 숨기기
+            loginBtn.style.display = 'none';
+            signupBtn.style.display = 'none';
+
+            // 사용자 이메일 및 로그아웃 버튼 표시
+            userEmailText.textContent = user.email; // 사용자 이메일 표시
+            userEmail.style.display = 'block';
+            logoutBtn.style.display = 'block';
+        }
+
+        // 로그아웃 함수
+        function logout() {
+            auth.signOut().then(() => {
+                console.log("성공: 로그아웃");
+                resetUIOnLogout();
+            }).catch((error) => {
+                console.error("실패: 로그아웃 에러", error);
+            });
+        }
+
+        // 로그아웃 후 UI 리셋 함수
+        function resetUIOnLogout() {
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            const userEmail = document.getElementById('userEmail');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            // 로그아웃 버튼 및 사용자 이메일 숨기기
+            userEmail.style.display = 'none';
+            logoutBtn.style.display = 'none';
+
+            // 로그인 및 회원가입 버튼 표시
+            loginBtn.style.display = 'block';
+            signupBtn.style.display = 'block';
+        }
+
+
+        // 로그인 이벤트 핸들러
         const loginForm = document.getElementById('loginForm');
         loginForm.addEventListener('submit', async function (event) {
             event.preventDefault();
@@ -56,12 +195,12 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 console.log("성공: 로그인 성공", userCredential);
                 closeModal('loginModal');
+                updateUIOnLogin(userCredential.user); // 로그인 성공 시 UI 업데이트
             } catch (error) {
                 console.log("실패: 로그인 에러", error);
-                const loginError = document.getElementById('loginError');
+                document.getElementById('loginError').textContent = '잘못된 이메일 또는 비밀번호입니다'
                 document.getElementById('loginError').style.display = 'block'; // 로그인 실패 메시지 표시
 
-                loginError.style.display = 'block';
             }
         });
 
@@ -74,6 +213,16 @@
 
         document.getElementById('signInEmail').addEventListener('input', validateLoginButton);
         document.getElementById('signInPassword').addEventListener('input', validateLoginButton);
+
+        // 로그아웃
+        window.logout = function () {
+            auth.signOut().then(() => {
+                console.log("성공: 로그아웃");
+                resetUIOnLogout();
+            }).catch((error) => {
+                console.error("실패: 로그아웃 에러", error);
+            });
+        }
     </script>
     <header>
         <nav class="navbar navbar-expand-md bg-body-tertiary">
@@ -101,6 +250,14 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#registerModal" id="signupBtn">Register</a>
                         </li>
+
+                        <!-- 사용자 이메일 및 로그아웃 버튼 -->
+                        <li class="nav-item" style="display: none;" id="userEmail">
+                            <span class="nav-link" id="userEmailText"></span>
+                        </li>
+                        <li class="nav-item" style="display: none;" id="logoutBtn">
+                            <a class="nav-link" href="#" id="logoutLink">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -109,76 +266,30 @@
             <span class="bar-ing"></span>
         </div>
     </header>
-    <div class="team-introduction">
+    <div class="team-introduction" id="team">
         <div class="team-photo">
-            <img src="data:image/jpeg;base64,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">
+            <img
+                src="data:image/jpeg;base64,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">
         </div>
         <div class="team-description">
-            <p>가나다라마바사</p>
+            <p>안녕하세요! 저희는 "꽁꽁 얼어붙은 얼음위를 고양이가 걸어다닙니다" 조입니다.</p>
+            <p>저희는 좋은 개발자가 되는 것을 목표로 열심히 성장해나가는 팀원들이 모여있습니다.</p>
+            <p>앞으로도 더욱 더 노력하여 자신만의 색을 가진 개발자가 되도록 노력하겠습니다.</p>
+            <p>모두들 파이팅!!!</p>
         </div>
     </div>
     <hr>
-    <form id ="team">
-        <button type="button" class="submit" id = "test">팀원 추가</button>
-    </form>
+    <div class="membtn-container">
+        <button type="button" id="memberAddBtn">팀원 추가</button>
+    </div>
     <div id="member" class="wrapper">
-        <ul class="team">
-            <li class="team-item">
-                <div class="profile profile_red">
-                    <img src="images/red.png">
-                    <div class="profile-contents">
-                        <h2>Liam <span>CEO</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-            <li class="team-item">
-                <div class="profile profile_beige">
-                    <img src="images/doggy.png">
-                    <div class="profile-contents">
-                        <h2>Coco <span>Mood Maker</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-            <li class="team-item">
-                <div class="profile profile_green">
-                    <img src="images/green.png">
-                    <div class="profile-contents">
-                        <h2>Olivia <span>Designer</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-            <li class="team-item">
-                <div class="profile profile_pink">
-                    <img src="images/pink.png">
-                    <div class="profile-contents">
-                        <h2>James <span>Front-end</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
-            <li class="team-item">
-                <div class="profile profile_purple">
-                    <img src="images/purple.png">
-                    <div class="profile-contents">
-                        <h2>Ella <span>Back-end</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus</p>
-                    </div>
-                </div>
-            </li>
         </ul>
     </div>
+
     <!-- 회원가입 모달 -->
     <div id="signupModal" class="modal">
         <div class="modal-content">
-            <form id="signupForm" class="register"> 
+            <form id="signupForm" class="register">
                 <h1>회원가입</h1>
                 <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
@@ -194,12 +305,14 @@
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <form id="loginForm">
-        
+
                 <h1>로그인</h1>
                 <div class="input-container"><input type="email" id="signInEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signInPassword" placeholder="Password" /></div>
                 <button type="submit" id="signInButton">로그인 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
+                <div id="loginError" style="color: red; display: none;">이메일 또는 비밀번호를 확인해주세요.</div>
+
             </form>
         </div>
     </div>
@@ -207,26 +320,27 @@
     <!-- 멤버추가 모달 -->
     <div id="memberaddModal" class="modal">
         <div class="modal-content">
-            <form class = "memberAdd">
+            <form class="memberAdd">
                 <div class="modal-header">
                     <h1>팀원 추가</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('memberaddModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeModal('memberaddModal')"></button>
                 </div>
                 <div class="row">
                     <span class="title_content">이미지 url</span>
-                    <input class="txtfield" type="url" id="imgurl"/>
+                    <input class="txtfield" type="url" id="imgurl" />
                 </div>
                 <div class="row">
                     <span class="title_content">이름</span>
-                    <input class="txtfield" type="text" id="name"/>
+                    <input class="txtfield" type="text" id="name" />
                 </div>
                 <div class="row">
                     <span class="title_content">mbti</span>
-                    <input class="txtfield" type="text" id="mbti"/>
+                    <input class="txtfield" type="text" id="mbti" />
                 </div>
                 <div class="row">
                     <span class="title_content">블로그 주소</span>
-                    <input class="txtfield" type="text" id="blogaddress"/>
+                    <input class="txtfield" type="text" id="blogaddress" />
                 </div>
                 <div class="row">
                     <span class="title_content big">자신의 장점</span>
@@ -241,6 +355,8 @@
             </form>
         </div>
     </div>
+    <button onclick="moveToTop()" class="btn-moveTop"></button>
+    <button onclick="moveToBottom()" class="btn-moveBottom"></button>
     <script>
         // 스크롤바
         let scrollTop = 0;
@@ -257,6 +373,14 @@
             },
             false
         );
+
+        let moveToTop = function () {
+            document.body.scrollIntoView({ behavior: "smooth" });
+        };
+
+        let moveToBottom = function () {
+            document.body.scrollIntoView({ behavior: "smooth", block: "end" });
+        };
         const signUpPassword = document.getElementById('signUpPassword');
         const signUpCheckPassword = document.getElementById('signUpCheckPassword');
         const signUpButton = document.getElementById('signUpButton');
@@ -293,11 +417,30 @@
             openModal('loginModal');
         });
 
-        document.getElementById('test').addEventListener('click', function () {
+        document.getElementById('memberAddBtn').addEventListener('click', function () {
             openModal('memberaddModal');
         });
+        // DOM이 완전히 로드된 후 이벤트 리스너 추가
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutLink = document.getElementById('logoutLink');
 
+            logoutLink.addEventListener('click', function (event) {
+                event.preventDefault(); // 기본 앵커 클릭 동작 방지
+                logout();
+            });
+
+            const teamCards = document.querySelectorAll('.team-item');
+            // 각 카드에 클릭 이벤트 리스너 추가
+            teamCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // 카드에서 팀원의 이름을 추출
+                    const name = card.querySelector('h2').textContent;
+                    alert('클릭한 팀원: ' + member.name);
+                });
+            });
+        });
     </script>
+
 </body>
 
 </html>
