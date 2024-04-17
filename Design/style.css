@@ -80,6 +80,7 @@ header {
     left: 0;
     right: 0;
     background-color: #D9BDAD;
+    z-index: 999;
 }
 
 #nav-title {
