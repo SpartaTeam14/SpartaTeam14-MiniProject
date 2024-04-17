@@ -17,10 +17,20 @@
     font-family: "NIXGONFONTS_M";
 }
 
-input[type="password"] {
-    /* 비밀번호 입력란에 적용되는 공통 스타일 */
+input[type="password"]{
     font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
 }
+input[type="email"]{
+    font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
+}
+
+.team-description p {
+    font-size: 22px; /* 여기에 적절한 폰트 크기를 입력하세요 */
+}
+
+body::-webkit-scrollbar {
+    display: none;
+  }
 
 form body,
 ul,
@@ -53,10 +63,6 @@ header {
     left: 0;
     right: 0;
     background-color: #D9BDAD;
-}
-
-nav {
-    background-color: var(--color-deepblue);
 }
 
 #nav-title {
@@ -100,7 +106,7 @@ nav {
 }
 
 .team-item {
-    flex-basis: 100px;
+    flex-basis: 200px;
     flex-shrink: 0;
     margin: 0 30px;
     opacity: 0.4;
@@ -109,7 +115,7 @@ nav {
 
 .team-item:hover {
     opacity: 1;
-    flex-basis: 160px;
+    flex-basis: 250px;
     margin: 0 20px;
 }
 
@@ -169,17 +175,17 @@ nav {
 }
 
 .profile-contents h2 {
-    font-size: 17px;
+    font-size: 35px;
 }
 
 .profile-contents h2 span {
     display: block;
-    font-size: 10px;
+    font-size: 22px;
 }
 
 .profile-contents p {
     color: white;
-    font-size: 10px;
+    font-size: 17px;
     min-width: 140px;
     max-height: 0;
     overflow: hidden;
@@ -206,7 +212,7 @@ nav {
 
 .team-photo img {
     width: 500px;
-    margin: 40px 0px 30px 150px;
+    margin: 100px 0px 30px 150px;
 }
 
 .team-description {
@@ -304,3 +310,50 @@ nav {
 textarea {
     resize: none; 
 }
+
+.membtn-container{
+    text-align: center;
+}
+#memberAddBtn {
+    background-color: #D9BDAD; /* 새로운 배경색 지정 */
+    color: white; /* 텍스트 색상을 밝게 설정하여 대비를 높임 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 20px; /* 적절한 패딩값 추가 (예시) */
+    border-radius: 5px; /* 버튼 모서리를 둥글게 만듦 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+}
+
+#memberAddBtn:hover {
+    background-color: #d9b29c; /* 마우스 오버 시 배경색 변경 */
+}
+
+/* moveTop 버튼 */
+.btn-moveTop {
+    position: fixed;
+    right: 60px;
+    bottom: 104px;
+    width: 44px;
+    height: 44px;
+    background-image: url(./images/btn-moveTop.jpg);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-moveTop:hover {
+    background-image: url(./images/btn-moveTop-hover.jpg);
+  }
+  /* movebottom 버튼 */
+.btn-moveBottom {
+    position: fixed;
+    right: 60px;
+    bottom: 60px;
+    width: 44px;
+    height: 44px;
+    background-image: url(./images/btn-moveBottom.jpg);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-moveBottom:hover {
+    background-image: url(./images/btn-moveBottom-hover.jpg);
+  }
