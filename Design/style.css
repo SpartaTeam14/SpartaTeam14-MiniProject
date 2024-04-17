@@ -26,6 +26,10 @@ input[type="password"][type="email"] {
     font-size: 22px; /* 여기에 적절한 폰트 크기를 입력하세요 */
 }
 
+body::-webkit-scrollbar {
+    display: none;
+  }
+
 form body,
 ul,
 h2,
@@ -57,10 +61,6 @@ header {
     left: 0;
     right: 0;
     background-color: #D9BDAD;
-}
-
-nav {
-    background-color: var(--color-deepblue);
 }
 
 #nav-title {
@@ -324,3 +324,34 @@ textarea {
 #memberAddBtn:hover {
     background-color: #d9b29c; /* 마우스 오버 시 배경색 변경 */
 }
+
+/* moveTop 버튼 */
+.btn-moveTop {
+    position: fixed;
+    right: 60px;
+    bottom: 104px;
+    width: 44px;
+    height: 44px;
+    background-image: url(./images/btn-moveTop.jpg);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-moveTop:hover {
+    background-image: url(./images/btn-moveTop-hover.jpg);
+  }
+  /* movebottom 버튼 */
+.btn-moveBottom {
+    position: fixed;
+    right: 60px;
+    bottom: 60px;
+    width: 44px;
+    height: 44px;
+    background-image: url(./images/btn-moveBottom.jpg);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-moveBottom:hover {
+    background-image: url(./images/btn-moveBottom-hover.jpg);
+  }
