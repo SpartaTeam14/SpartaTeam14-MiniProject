@@ -51,15 +51,33 @@ body {
 
 .wrapper {
     display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start; 
+    align-items: flex-start;
+    margin: 30px;
+    gap: 10px; 
+}
+
+
+.team-item {
+    flex: 0 0 20%;  
+    max-width: 20%; 
+    margin: 5px; 
+    opacity: 0.4;
+    transition: all .4s ease-in-out; 
+    height: auto; 
+    background-color: #f2f2f2; 
+}
+
+.team-item:hover {
+    flex-basis: 24%; 
+    opacity: 1; 
+    transition: all .4s ease-in-out;
 }
 
 header {
     position: fixed;
     top: 0;
-    /* width: 100% */
     left: 0;
     right: 0;
     background-color: #D9BDAD;
