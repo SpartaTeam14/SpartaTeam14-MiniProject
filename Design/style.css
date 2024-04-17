@@ -106,7 +106,7 @@ header {
 }
 
 .team-item {
-    flex-basis: calc(20% - 60px);
+    flex-basis: 200px;
     flex-shrink: 0;
     margin: 0 30px;
     opacity: 0.4;
@@ -115,24 +115,14 @@ header {
 
 .team-item:hover {
     opacity: 1;
-    z-index: 1;
-    transform: scale(1.2); /* 마우스를 올렸을 때 크기 확대 */
+    flex-basis: 250px;
+    margin: 0 20px;
 }
 
 .team-item img {
     width: 100%;
-    transition: transform .4s; /* 이미지에 크기 변화 transition설정 */
 }
 
-/* 오른쪽 마진을 재설정하기 - 5번째 아이템 이후에도 간격을 유지 */
-.team-item:not(:nth-child(5n)) {
-    margin-right: 12px; 
-}
-
-/* 마지막 아이템 오른쪽 마진 제거 */
-.team-item:last-child {
-    margin-right: 0;
-}
 .profile {
     background-color: #222;
     position: relative;
