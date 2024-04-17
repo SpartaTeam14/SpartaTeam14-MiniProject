@@ -17,8 +17,10 @@
     font-family: "NIXGONFONTS_M";
 }
 
-input[type="password"][type="email"] {
-    /* 비밀번호 입력란에 적용되는 공통 스타일 */
+input[type="password"]{
+    font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
+}
+input[type="email"]{
     font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
 }
 
