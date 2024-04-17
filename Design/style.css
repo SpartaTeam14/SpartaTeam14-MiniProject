@@ -375,3 +375,68 @@ textarea {
   .btn-moveBottom:hover {
     background-image: url(./images/btn-moveBottom-hover.jpg);
   }
+
+  /* 스크롤에 따른 헤더 변화를 위한 스타일 */
+  .container {
+    position: relative;
+    height: 60vh;
+    overflow: hidden;
+}
+
+.cat-image {
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease-out;
+}
+.background-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease-out;
+}
+.background-image {
+    background-image: url(./images/background-image.png); /* 얼음 배경 이미지 */
+    background-size: contain;
+    
+    /*filter: blur(5px);*/
+    opacity: 0.5;
+}
+
+.cat-image {
+    background-image: url(./images/cat-image.png); /* 고양이 이미지 */
+    background-size: contain;
+    background-repeat: no-repeat; /* 이미지가 반복x 설정 */
+    background-position: center; /* 이미지가 중앙에 위치하도록 설정 */
+    z-index: 1;
+}
+.text-content {
+    position: absolute;
+    width: 100%;
+    top: 55%; /* 중앙 위치 조정 */
+    transform: translateY(-50%); /* Y축 기준 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 28px;
+    z-index: 2;
+    transition: transform 0.2s ease-out; /* 이동 속도 빠르게 */
+}
+
+.fade-text {
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.3s ease-out; /* 투명도 및 위치 변화 속도 조정 */
+    transform: translateY(-20px); /* 초기 위치 설정 */
+}
+.fade-text:last-child { /* 마지막 p 태그만 특별하게 */
+    font-size: 36px; 
+    font-weight: bold; 
+    color: rgb(130, 94, 94);
+}
