@@ -1,4 +1,41 @@
-body, ul, h2, p {
+@font-face {
+    font-family: "NIXGONFONTS_B";
+    src: url("./font/NIXGONFONTS_B.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "NIXGONFONTS_L";
+    src: url("./font/NIXGONFONTS_L.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "NIXGONFONTS_M";
+    src: url("./font/NIXGONFONTS_M.ttf") format("truetype");
+}
+
+* {
+    font-family: "NIXGONFONTS_M";
+}
+
+input[type="password"]{
+    font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
+}
+input[type="email"]{
+    font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
+}
+
+.team-description p {
+    font-size: 22px; /* 여기에 적절한 폰트 크기를 입력하세요 */
+}
+
+body::-webkit-scrollbar {
+    display: none;
+  }
+
+form body,
+ul,
+h2,
+p {
     margin: 0;
     padding: 0;
 }
@@ -8,15 +45,76 @@ li {
 }
 
 body {
-    background-color: white;
+    background-color: #F2EFEB;
     color: #999;
 }
 
 .wrapper {
     display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-items: flex-start;
+    margin: 30px;
+    gap: 10px; 
+}
+
+.team-item {
+    flex: 0 0 20%;  
+    max-width: 20%; 
+    margin: 5px; 
+    opacity: 0.4;
+    transition: all .4s ease-in-out; 
+    height: auto; 
+    background-color: #f2f2f2; 
+}
+
+.team-item:hover {
+    flex-basis: 24%; 
+    opacity: 1; 
+    transition: all .4s ease-in-out;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #D9BDAD;
+    z-index: 999;
+}
+
+#nav-title {
+    color: #594539;
+    font-weight: 700;
+    font-size: 21px;
+}
+
+#nav-title:hover {
+    cursor: default;
+}
+
+#test {
+    width: 80%;
+    /* Adjust the width as needed */
+    margin: 0 auto;
+    /* Center the div horizontally */
+    padding-top: 100px;
+    /* Ensure content below the fixed header is visible */
+}
+
+.navbar-nav .nav-item>a {
+    color: #594539;
+    opacity: 0.5;
+    transition: all .5s ease-in-out;
+}
+
+.navbar-nav .nav-item>a:hover {
+    opacity: 1;
+}
+
+.navbar-nav .nav-item .active {
+    opacity: 1;
+    font-weight: 700;
 }
 
 .team {
@@ -26,16 +124,16 @@ body {
 }
 
 .team-item {
-    flex-basis: 100px;
+    flex-basis: 200px;
     flex-shrink: 0;
-    margin: 0 4px;
+    margin: 0 30px;
     opacity: 0.4;
     transition: all .4s;
 }
 
 .team-item:hover {
     opacity: 1;
-    flex-basis: 160px;
+    flex-basis: 250px;
     margin: 0 20px;
 }
 
@@ -52,10 +150,14 @@ body {
 .profile:before {
     content: ' ';
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.95+100 */
-background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.95) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.95) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#f2000000',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#f2000000', GradientType=0);
+    /* IE6-9 */
     position: absolute;
     left: 0;
     right: 0;
@@ -91,17 +193,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 }
 
 .profile-contents h2 {
-    font-size: 17px;
+    font-size: 35px;
 }
 
 .profile-contents h2 span {
     display: block;
-    font-size: 10px;
+    font-size: 22px;
 }
 
 .profile-contents p {
     color: white;
-    font-size: 10px;
+    font-size: 17px;
     min-width: 140px;
     max-height: 0;
     overflow: hidden;
@@ -117,12 +219,192 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
     margin-top: 0.4em;
 }
 
+.team-introduction {
+    display: flex;
+    justify-content: space-between;
+}
 
+.team-photo {
+    flex: 0 0 50%;
+}
 
+.team-photo img {
+    width: 500px;
+    margin: 100px 0px 30px 150px;
+}
 
+.team-description {
+    flex: 0 0 50%;
+    margin: auto;
+}
 
+.bar-bg {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    bottom: 0;
+    left: 0;
+    background-color: #F2DCC9;
+}
 
+.bar-ing {
+    position: absolute;
+    height: 5px;
+    bottom: 0;
+    left: 0;
+    background-color: #594539;
+}
 
+/* 모달창 기본 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    border-radius: 10px; 
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); 
+}
 
+/* 모달창 내용 스타일 */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 1%;
+    border: 1px solid #888;
+    width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+/* 여백조정 */
+.input-container {
+    margin-bottom: 10px;
+    /* 원하는 여백 크기로 조정 */
+}
 
+.input-container input{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.row {
+    display: flex;
+    padding: 10px 0;
+}
+
+.memberAdd{
+    width: 400px;
+    margin: 0 auto;
+}
+
+.title_content{
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+}
+.txtfield{
+    width: 300px;
+    height: 38px;
+    font-size: 13px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.txtfield.big{
+	height: 150px;
+}
+.title_content.big{
+	height: 150px;
+}
+
+textarea {
+    resize: none; 
+}
+
+.membtn-container{
+    text-align: center;
+}
+#memberAddBtn {
+    background-color: #D9BDAD; /* 새로운 배경색 지정 */
+    color: white; /* 텍스트 색상을 밝게 설정하여 대비를 높임 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 20px; /* 적절한 패딩값 추가 (예시) */
+    border-radius: 5px; /* 버튼 모서리를 둥글게 만듦 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+}
+
+#memberAddBtn:hover {
+    background-color: #d9b29c; /* 마우스 오버 시 배경색 변경 */
+}
+
+/* moveTop 버튼 */
+.btn-moveTop {
+    position: fixed;
+    right: 60px;
+    bottom: 104px;
+    width: 44px;
+    height: 44px;
+    background-image: url(./images/btn-moveTop.jpg);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-moveTop:hover {
+    background-image: url(./images/btn-moveTop-hover.jpg);
+  }
+  /* movebottom 버튼 */
+.btn-moveBottom {
+    position: fixed;
+    right: 60px;
+    bottom: 60px;
+    width: 44px;
+    height: 44px;
+    background-image: url(./images/btn-moveBottom.jpg);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-moveBottom:hover {
+    background-image: url(./images/btn-moveBottom-hover.jpg);
+  }
+
+  
+.modal-header{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px;
+}
+
+/* 자기소개페이지 모달버튼 */
+.modal-button-detail {
+    width: 21px;
+    height: 21px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#edit{
+    background-image: url(./images/edit.png);
+}
+
+#delete{
+    background-image: url(./images/delete.png);
+}
+
+#edit:hover{
+    background-image: url(./images/edit-hover.png);
+}
+
+#delete:hover{
+    background-image: url(./images/delete-hover.png);
+}
