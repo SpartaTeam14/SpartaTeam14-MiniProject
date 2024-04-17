@@ -408,7 +408,6 @@ textarea {
     background-image: url(./images/btn-moveBottom-hover.jpg);
 }
 
-
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -423,6 +422,11 @@ textarea {
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+.modal-button {
+    padding:1%;
+    border:none;
+    cursor:pointer
 }
 
 #edit {
