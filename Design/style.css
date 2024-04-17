@@ -30,6 +30,8 @@ input[type="email"] {
 .team-description p {
     font-size: 22px;
     /* 여기에 적절한 폰트 크기를 입력하세요 */
+    font-family: "NIXGONFONTS_B";
+    margin-top: 22px;
 }
 
 body::-webkit-scrollbar {
@@ -275,7 +277,7 @@ header {
 /* 모달창 내용 스타일 */
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 7% auto;
     padding: 1%;
     border: 1px solid #888;
     width: 30%;
@@ -283,7 +285,7 @@ header {
 }
 .modal-content-detail {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 7% auto;
     padding: 1%;
     border: 1px solid #888;
     width: 50%;
