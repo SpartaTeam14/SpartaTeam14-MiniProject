@@ -9,7 +9,7 @@
 
     <title>14조</title>
     <link rel="stylesheet" href="style.css">
-  
+
 </head>
 
 <body>
@@ -52,13 +52,17 @@
             const teamContainer = document.getElementById('member');
             teamContainer.innerHTML = '';
 
+            const colors = ['profile_red', 'profile_beige', 'profile_green', 'profile_pink', 'profile_purple'];
+
             Object.values(members).forEach(member => {
                 // 이미지 URL이 유효한지 확인하고, 없으면 기본이미지사용
                 const imageUrl = member.image || 'images/purple.png';
+                const randomColorClass = colors[Math.floor(Math.random() * colors.length)];
 
                 const memberHtml = `
             <li class="team-item">
-                <div class="profile profile_purple"> 
+                <div class="profile ${randomColorClass}"> 
+
                     <img src="${imageUrl}">
                     <div class="profile-contents">
                         <h2>${member.name} <span>${member.mbti}</span></h2>
