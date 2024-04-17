@@ -311,6 +311,12 @@ header {
     height: 40px;
     font-weight: bold;
 }
+.title_content_answer{
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+}
 .txtfield{
     width: 300px;
     height: 38px;

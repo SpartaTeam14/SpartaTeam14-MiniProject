@@ -337,7 +337,7 @@
                     <textarea class="txtfield big" id="strengths"></textarea>
                 </div>
                 <div class="row">
-                    <span class="title_content big">자신의 협업스타일</span>
+                    <span class="title_content big">자신의 <br> 협업스타일</span>
                     <textarea class="txtfield big" id="Collaboration"></textarea>
                 </div>
                 <button type="submit" id="memberAddButton">등록하기</button>
@@ -359,21 +359,32 @@
                 </div>
             </div>
             <div>
-                <div style="display:inline-block; vertical-align:top;">
+                <div style="display:inline-block; vertical-align:top; margin-top: 30px;">
                     <img class="profile-picture" src="./images/green.png" alt="프로필 사진" width="150px" height="230px" />
                 </div>
                 <div style="display:inline-block; margin:20px">
-                    <div>이름 : </div>
-                    <br>
-                    <div>MBTI : </div>
-                    <br>
-                    <div>블로그 주소 : </div>
+                    <div class="row">
+                        <span class="title_content">이름</span>
+                        <span class="title_content_answer" id="name">aaa</span>
+                    </div>
+                    <div class="row">
+                        <span class="title_content">mbti</span>
+                        <span class="title_content_answer" id="mbti">cute</span>
+                    </div>
+                    <div class="row">
+                        <span class="title_content">블로그 주소</span>
+                        <span class="title_content_answer" id="blog">ttt</span>
+                    </div>
                 </div>
             </div>
-            <br>
-            <div>자신의 장점</div>
-            <br>
-            <div>자신의 협업 스타일</div>
+            <div class="row">
+                <span class="title_content">자신의 장점</span>
+                <span class="title_content_answer" id="strengths">good</span>
+            </div>
+            <div class="row">
+                <span class="title_content">자신의 <br> 협업스타일</span>
+                <span class="title_content_answer" id="collaboration">good</span>
+            </div>
             <div style="text-align:center">
                 <button type="button" class="modal-button" onclick="closeModal('detailModal')">닫기</button>
             </div>
