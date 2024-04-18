@@ -20,6 +20,7 @@
 input[type="password"]{
     font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
 }
+
 input[type="email"]{
     font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
 }
@@ -30,7 +31,7 @@ input[type="email"]{
 
 body::-webkit-scrollbar {
     display: none;
-  }
+}
 
 form body,
 ul,
@@ -46,31 +47,32 @@ li {
 
 body {
     background-color: #F2EFEB;
+    background-color: #F2EFEB;
     color: #999;
 }
 
 .wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
     align-items: flex-start;
     margin: 30px;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .team-item {
-    flex: 0 0 20%;  
-    max-width: 20%; 
-    margin: 5px; 
+    flex: 0 0 20%;
+    max-width: 20%;
+    margin: 5px;
     opacity: 0.4;
-    transition: all .4s ease-in-out; 
-    height: auto; 
-    background-color: #f2f2f2; 
+    transition: all .4s ease-in-out;
+    height: auto;
+    background-color: #f2f2f2;
 }
 
 .team-item:hover {
-    flex-basis: 24%; 
-    opacity: 1; 
+    flex-basis: 24%;
+    opacity: 1;
     transition: all .4s ease-in-out;
 }
 
@@ -80,6 +82,7 @@ header {
     left: 0;
     right: 0;
     background-color: #D9BDAD;
+    z-index: 999;
 }
 
 #nav-title {
@@ -92,14 +95,11 @@ header {
     cursor: default;
 }
 
-#test {
-    width: 80%;
-    /* Adjust the width as needed */
+ #detail_img {
     margin: 0 auto;
-    /* Center the div horizontally */
-    padding-top: 100px;
-    /* Ensure content below the fixed header is visible */
-}
+    display:inline-block; 
+    vertical-align:top;
+} 
 
 .navbar-nav .nav-item>a {
     color: #594539;
@@ -124,7 +124,9 @@ header {
 
 .team-item {
     flex-basis: 200px;
+    flex-basis: 200px;
     flex-shrink: 0;
+    margin: 0 30px;
     margin: 0 30px;
     opacity: 0.4;
     transition: all .4s;
@@ -132,6 +134,7 @@ header {
 
 .team-item:hover {
     opacity: 1;
+    flex-basis: 250px;
     flex-basis: 250px;
     margin: 0 20px;
 }
@@ -149,6 +152,14 @@ header {
 .profile:before {
     content: ' ';
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.95+100 */
+    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#f2000000', GradientType=0);
+    /* IE6-9 */
     background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
     /* FF3.6-15 */
     background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%);
@@ -193,15 +204,18 @@ header {
 
 .profile-contents h2 {
     font-size: 35px;
+    font-size: 35px;
 }
 
-.profile-contents h2 span {
+.profile-contents h4 span {
     display: block;
+    font-size: 22px;
     font-size: 22px;
 }
 
 .profile-contents p {
     color: white;
+    font-size: 17px;
     font-size: 17px;
     min-width: 140px;
     max-height: 0;
@@ -229,6 +243,7 @@ header {
 
 .team-photo img {
     width: 500px;
+    margin: 100px 0px 30px 150px;
     margin: 100px 0px 30px 150px;
 }
 
@@ -258,7 +273,7 @@ header {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2000;
     left: 0;
     top: 0;
     width: 100%;
@@ -266,17 +281,25 @@ header {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
     text-align: center;
-    border-radius: 10px; 
-    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); 
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 }
 
 /* 모달창 내용 스타일 */
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 7% auto;
     padding: 1%;
     border: 1px solid #888;
     width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.modal-content-detail {
+    background-color: #fefefe;
+    margin: 7% auto;
+    padding: 1%;
+    border: 1px solid #888;
+    width: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -298,6 +321,10 @@ header {
     padding: 10px 0;
 }
 
+.row a{
+    color: inherit; /* 링크의 색상 제거 */
+}
+
 .memberAdd{
     width: 400px;
     margin: 0 auto;
@@ -306,31 +333,42 @@ header {
 .title_content{
     display: flex;
     align-items: center;
-    width: 100px;
+    width: 30%;
     height: 40px;
     font-weight: bold;
 }
+
+.title_content_answer {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    height: 40px;
+}
+
 .txtfield{
-    width: 300px;
+    width: 70%;
     height: 38px;
     font-size: 13px;
     padding: 10px;
     box-sizing: border-box;
 }
+
 .txtfield.big{
-	height: 150px;
+    height: 150px;
 }
+
 .title_content.big{
-	height: 150px;
+    height: 150px;
 }
 
 textarea {
-    resize: none; 
+    resize: none;
 }
 
 .membtn-container{
     text-align: center;
 }
+
 #memberAddBtn {
     background-color: #D9BDAD; /* 새로운 배경색 지정 */
     color: white; /* 텍스트 색상을 밝게 설정하여 대비를 높임 */
@@ -347,30 +385,206 @@ textarea {
 /* moveTop 버튼 */
 .btn-moveTop {
     position: fixed;
-    right: 60px;
-    bottom: 104px;
+    right: 2%;
+    bottom: 64px;
     width: 44px;
     height: 44px;
-    background-image: url(./images/btn-moveTop.jpg);
+    background-image: url(./images/btn-moveTop.png);
     background-color: transparent;
     border: none;
     cursor: pointer;
-  }
-  .btn-moveTop:hover {
-    background-image: url(./images/btn-moveTop-hover.jpg);
-  }
-  /* movebottom 버튼 */
+}
+
+.btn-moveTop:hover {
+    background-image: url(./images/btn-moveTop-hover.png);
+}
+
+/* movebottom 버튼 */
 .btn-moveBottom {
     position: fixed;
-    right: 60px;
-    bottom: 60px;
+    right: 2%;
+    bottom: 20px;
     width: 44px;
     height: 44px;
-    background-image: url(./images/btn-moveBottom.jpg);
+    background-image: url(./images/btn-moveBottom.png);
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+
+.btn-moveBottom:hover {
+    background-image: url(./images/btn-moveBottom-hover.png);
+}
+
+  /* 스크롤에 따른 헤더 변화를 위한 스타일 */
+  .container {
+    position: relative;
+    height: 60vh;
+    overflow: hidden;
+}
+
+.cat-image {
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    bottom: 0;
+    background-image: url(./images/cat-image.png); /* 고양이 이미지 */
+    background-size: contain;
+    background-repeat: no-repeat; /* 이미지가 반복x 설정 */
+    background-position: center; /* 이미지가 중앙에 위치하도록 설정 */
+    z-index: 1;
+}
+.text-content {
+    position: absolute;
+    width: 100%;
+    top: 55%; /* 중앙 위치 조정 */
+    transform: translateY(-50%); /* Y축 기준 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 28px;
+    z-index: 2;
+    transition: transform 0.2s ease-out; /* 이동 속도 빠르게 */
+}
+
+.fade-text {
+    opacity: 0;
+    transition: opacity 0.5s ease-out, transform 0.3s ease-out; /* 투명도 및 위치 변화 속도 조정 */
+    transform: translateY(-20px); /* 초기 위치 설정 */
+}
+.fade-text:last-child { /* 마지막 p 태그만 특별하게 */
+    font-size: 36px; 
+    font-weight: bold; 
+    color: rgb(130, 94, 94);
+}
+@keyframes background-image {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  .btn-moveBottom:hover {
-    background-image: url(./images/btn-moveBottom-hover.jpg);
+
+  body {
+    background: radial-gradient(ellipse at center, #fffeea 0%, #fffeea 35%, #B7E8EB 100%);
+    position: relative;
   }
+  .ocean {
+    height: 5%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #015871;
+  }
+  
+  .wave {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x;
+    position: absolute;
+    top: -198px;
+    width: 6400px;
+    height: 198px;
+    animation: wave 6s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .wave:nth-of-type(2) {
+    top: -175px;
+    animation: wave 7s cubic-bezier(0.4, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+    opacity: 1;
+  }
+  
+  .wave:nth-of-type(3) {
+    top: -150px;
+    animation: wave 8s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.25s infinite, swell 8s ease -1.5s infinite;
+    opacity: 0.8;
+  }
+  
+  .wave:nth-of-type(4) {
+    top: -125px;
+    animation: wave 9s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.375s infinite, swell 9s ease -1.75s infinite;
+    opacity: 0.6;
+  }
+  
+  @keyframes wave {
+    0% {
+      margin-left: 0;
+    }
+    100% {
+      margin-left: -1600px;
+    }
+  }
+  
+  @keyframes swell {
+    0%, 100% {
+      transform: translate3d(0, -35px, 0);
+    }
+    250% {
+        transform: translate3d(0, -15px, 0);
+      }
+    50% {
+      transform: translate3d(0, 50px, 0);
+    }
+  }
+
+  
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+/* 자기소개페이지 모달버튼 */
+.modal-button-detail {
+    width: 21px;
+    height: 21px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.modal-button {
+    padding:1%;
+    border:none;
+    cursor:pointer
+}
+
+#edit {
+    background-image: url(./images/edit.png);
+}
+
+#delete {
+    background-image: url(./images/delete.png);
+}
+
+#edit:hover {
+    background-image: url(./images/edit-hover.png);
+}
+
+#delete:hover {
+    background-image: url(./images/delete-hover.png);
+}
+
+.profile-picture {
+    width: 150px;
+    height: 230px;
+
+}
+
+#detail_img{
+   margin-top: 10px;
+   width: 200px;
+}
+
+.detail_head{
+    display:inline-block; 
+    width: calc(100% - 300px);
+    /* 이미지 너비에는 실제 이미지의 너비를 넣어주셔야 합니다. */
+    padding-right: 0; /* 또는 여러분이 원하는 값으로 설정 */
+    /* 기타 스타일링 */
+}
