@@ -60,6 +60,7 @@
                 const randomColorClass = colors[Math.floor(Math.random() * colors.length)];
 
                 const memberHtml = `
+                
             <li class="team-item">
                 <div class="profile ${randomColorClass}"> 
 
@@ -73,8 +74,17 @@
                 teamContainer.innerHTML += memberHtml;
             });
             console.log(member.mbti);
+            addClickListenersToTeamItems();
         }
-
+        function addClickListenersToTeamItems() {
+    const teamCards = document.querySelectorAll('.team-item');
+    teamCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const name = card.querySelector('h2').textContent;
+            alert('클릭한 팀원: ' + name);
+        });
+    });
+}
         // 팀원 데이터를 Firestore에 추가하는 함수
         async function addTeamMember() {
             if (auth.currentUser) { // 사용자 로그인 상태 확인
@@ -260,6 +270,16 @@
         </div>
     </header>
     <div class="container">
+        <div class="footsteps">
+            <div class="footstep-left"></div>
+            <div class="footstep-right"></div>
+        </div>
+        <div class="ocean">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
         <div class="background-image"></div>
         <div class="cat-image"></div>
         <div class="text-content">
@@ -268,7 +288,7 @@
             <p class="fade-text">앞으로도 더욱 더 노력하여 자신만의 색을 가진 개발자가 되도록 노력하겠습니다.</p>
             <p class="fade-text">모두들 파이팅!!!</p>
         </div>
-        
+
     </div>
     <hr>
     <div class="membtn-container">
@@ -414,6 +434,14 @@
         });
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
         document.addEventListener('DOMContentLoaded', () => {
+
+            const texts = document.querySelectorAll('.fade-text');
+            // 초기 세팅: 첫 번째 텍스트만 선명하게 표시
+            texts.forEach((text, index) => {
+                text.style.opacity = index === 0 ? '1' : '0';
+                text.style.transform = index === 0 ? 'translateY(0)' : 'translateY(-20px)';
+            });
+
             const logoutLink = document.getElementById('logoutLink');
 
             logoutLink.addEventListener('click', function (event) {
@@ -425,53 +453,43 @@
             // 각 카드에 클릭 이벤트 리스너 추가
             teamCards.forEach(card => {
                 card.addEventListener('click', () => {
+                    console.log("click")
                     // 카드에서 팀원의 이름을 추출
                     const name = card.querySelector('h2').textContent;
-                    alert('클릭한 팀원: ' + member.name);
+                    alert('클릭한 팀원: ' + name);
                 });
             });
         });
+        
 
-        window.addEventListener('scroll', function() {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    const maxScroll = document.body.scrollHeight - window.innerHeight;
-    const scrollPercent = scrollY / maxScroll;
 
-    // 고양이 이미지를 오른쪽으로 이동
-    document.querySelector('.cat-image').style.transform = `translateX(${scrollPercent * 500}%)`;
 
-    // 얼음 배경을 왼쪽으로 이동
-    document.querySelector('.ice-background').style.transform = `translateX(-${scrollPercent * 50}%)`;
+        window.addEventListener('scroll', () => {
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollY / maxScroll;
 
-    // 텍스트 투명도 조정
-    const texts = document.querySelectorAll('.fade-text');
-    
-    texts.forEach((text, index) => {
-        if (scrollPercent > index * 0.25 && scrollPercent < (index + 1) * 0.25) {
-            text.style.opacity = 1;
-        } else {
-            text.style.opacity = 0;
-        }
-    });
-});
+            const texts = document.querySelectorAll('.fade-text');
+            const lastIndex = texts.length - 1;
 
-/* 스크롤 애니메이션 조정: 스크롤 위치에 따른 글자 이동 범위 및 속도 */
-window.addEventListener('scroll', function() {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    const maxScroll = document.body.scrollHeight - window.innerHeight;
-    const scrollPercent = scrollY / maxScroll;
+            texts.forEach((text, index) => {
+                if (scrollPercent > index * 0.1 && scrollPercent < (index + 1) * 0.1) {
+                    text.style.opacity = 1;
+                    text.style.transform = 'translateY(0)';
+                } else if (index === lastIndex && scrollPercent > index * 0.1) {
+                    text.style.opacity = 1;
+                    text.style.transform = 'translateY(0)';
+                } else {
+                    text.style.opacity = 0;
+                    text.style.transform = 'translateY(-20px)';
+                }
+            });
 
-    const texts = document.querySelectorAll('.fade-text');
-    texts.forEach((text, index) => {
-        if (scrollPercent > index * 0.1 && scrollPercent < (index + 1) * 0.1) {
-            text.style.opacity = 1;
-            text.style.transform = 'translateY(0)'; /* 현재 위치 유지 */
-        } else {
-            text.style.opacity = 0;
-            text.style.transform = 'translateY(-20px)'; /* 위로 조금 더 부드럽게 이동 */
-        }
-    });
-});
+            // 고양이 이동 애니메이션
+            const catImage = document.querySelector('.cat-image');
+            if (catImage) catImage.style.transform = `translateX(${scrollPercent * 500}%)`;
+            if (iceBackground) iceBackground.style.transform = `translateX(-${scrollPercent * 50}%)`;
+        });
 
     </script>
 
