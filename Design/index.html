@@ -38,7 +38,6 @@
                         }
                     }
                 });
-                console.log(memberList);
                 // 클릭된 팀 카드의 이름으로 데이터 필터링
                 const filteredData = memberList.filter(item => item.name.trim() === memberName.trim()); //공백제거
                 // 필터링된 요소들의 value 값을 변수에 할당
@@ -52,7 +51,6 @@
                     image = item.image;
                     blog = item.blog;
                 });
-                console.log(name, mbti, strengths, collaboration,image,blog);
                 document.getElementById('nameDetail').innerHTML = name;
                 document.getElementById('mbtiDetail').innerHTML = mbti;
                 document.getElementById('blogDetail').innerHTML = `<a href="${blog}">${blog}</a>`;
@@ -110,7 +108,6 @@
             </li>`;
                 teamContainer.innerHTML += memberHtml;
             });
-            console.log(member.mbti);
             addClickListenersToTeamItems();
         }
         function addClickListenersToTeamItems() {
@@ -119,8 +116,6 @@
                 card.addEventListener('click', () => {
                     const name = card.querySelector('h2').textContent;
                     displayMemberDetails(name);
-                    console.log(name);
-
                     openModal('detailModal');
                 });
             });
