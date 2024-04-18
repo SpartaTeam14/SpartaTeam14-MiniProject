@@ -448,7 +448,7 @@
             <div class="wave"></div>
         </div>
         <div class="background-image" id="team"></div>
-        <div class="cat-image"></div>
+        <div class="cat-image" id="cat-image"></div>
         <div class="text-content">
             <p class="fade-text"> 꽁꽁 얼어붙은 얼음위를 고양이가 걸어다닙니다 </p>
             <p class="fade-text"> 저희는 멋진 백엔드 개발자가 되는것을 목표를 가진 "꽁냥이" 조입니다 </p>
@@ -620,6 +620,15 @@
         </div>
     </div>
 
+    <div id="teamGoalModal" class="modal">
+        <div class="modal-content">
+            <form id="loginForm">
+                <h1>우리 팀 목표</h1>
+                <p>이쁜말~</p>
+            </form>
+        </div>
+    </div>
+
     <button onclick="moveToTop()" class="btn-moveTop"></button>
     <button onclick="moveToBottom()" class="btn-moveBottom"></button>
     <script>
@@ -697,6 +706,10 @@
         document.getElementById('memberAddBtn').addEventListener('click', function () {
             openModal('memberaddModal');
         });
+        document.getElementById('cat-image').addEventListener('click', function () {
+            openModal('teamGoalModal');
+        });
+
 
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
         document.addEventListener('DOMContentLoaded', () => {
