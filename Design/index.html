@@ -26,7 +26,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        function displayMemberDetails(memberName) {
+        function displayMemberDetails(memberName, modalKind) {
             const membersCol = collection(db, "member");
             onSnapshot(membersCol, (snapshot) => {
                 const memberList = [];
@@ -42,7 +42,6 @@
                 const filteredData = memberList.filter(item => item.name.trim() === memberName.trim()); //공백제거
                 // 필터링된 요소들의 value 값을 변수에 할당
                 let name, mbti, strengths, collaboration, image, blog;
-                detail_img.innerHTML = ``;
                 filteredData.forEach(item => {
                     name = item.name;
                     mbti = item.mbti;
@@ -51,16 +50,37 @@
                     image = item.image;
                     blog = item.blog;
                 });
-                document.getElementById('nameDetail').innerHTML = name;
-                document.getElementById('mbtiDetail').innerHTML = mbti;
-                document.getElementById('blogDetail').innerHTML = `<a href="${blog}">${blog}</a>`;
-                document.getElementById('strengthsDetail').innerHTML = strengths;
-                document.getElementById('collaborationDetail').innerHTML = collaboration;
-                detail_img.innerHTML += `<img class="profile-picture" src="${image}" alt="프로필 사진">`;;
+                if (modalKind == 'Detail') {
+                    detail_img.innerHTML = ``;
+                    document.getElementById('nameDetail').innerHTML = name;
+                    document.getElementById('mbtiDetail').innerHTML = mbti;
+                    document.getElementById('blogDetail').innerHTML = `<a href="${blog}">${blog}</a>`;
+                    document.getElementById('strengthsDetail').innerHTML = strengths;
+                    document.getElementById('collaborationDetail').innerHTML = collaboration;
+                    detail_img.innerHTML += `<img class="profile-picture" src="${image}" alt="프로필 사진">`;
+
+                    openModal('detailModal');
+                } else if (modalKind == 'Update'){
+                    document.getElementById('update_name').value = name;
+                    document.getElementById('update_mbti').value = mbti;
+                    document.getElementById('update_blogaddress').value = blog;
+                    document.getElementById('update_strengths').innerHTML = strengths;
+                    document.getElementById('update_collaboration').innerHTML = collaboration;
+                    document.getElementById('update_imgurl').value = image;
+
+                    openModal('memberUpdateModal');
+                 }
+        });
+    }
+
+    // DOMContentLoaded 이벤트 리스너 추가
+    document.addEventListener('DOMContentLoaded', function() {
+            // edit 버튼에 이벤트 리스너 추가
+            document.getElementById('edit').addEventListener('click', function () {
+                const name = document.getElementById('nameDetail').textContent;
+                displayMemberDetails(name, 'Update');
             });
-        }
-
-
+        });
         // 실시간으로 팀원 데이터를 로드
         function listenToTeamMembers() {
             const membersCol = collection(db, "member");
@@ -112,14 +132,15 @@
         }
         function addClickListenersToTeamItems() {
             const teamCards = document.querySelectorAll('.team-item');
+            console.log(teamCards);
             teamCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const name = card.querySelector('h2').textContent;
-                    displayMemberDetails(name);
-                    openModal('detailModal');
+                    displayMemberDetails(name, 'Detail');
                 });
             });
         }
+
         // 팀원 데이터를 Firestore에 추가하는 함수
         async function addTeamMember() {
             if (auth.currentUser) { // 사용자 로그인 상태 확인
@@ -274,19 +295,19 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#team">team_info</a>
+                            <a class="nav-link" aria-current="page" href="#team">팀 설명</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#member">memeber_info</a>
+                            <a class="nav-link" aria-current="page" href="#member">멤버 카드</a>
                         </li>
                         </li>
                     </ul>
                     <ul class="navbar-nav" id="user">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#loginModal" id="loginBtn">Login</a>
+                            <a class="nav-link" aria-current="page" href="#loginModal" id="loginBtn">로그인</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#registerModal" id="signupBtn">Register</a>
+                            <a class="nav-link" aria-current="page" href="#registerModal" id="signupBtn">회원가입</a>
                         </li>
 
                         <!-- 사용자 이메일 및 로그아웃 버튼 -->
@@ -294,7 +315,7 @@
                             <span class="nav-link" id="userEmailText"></span>
                         </li>
                         <li class="nav-item" style="display: none;" id="logoutBtn">
-                            <a class="nav-link" href="#" id="logoutLink">Logout</a>
+                            <a class="nav-link" href="#" id="logoutLink">로그아웃</a>
                         </li>
                     </ul>
                 </div>
@@ -315,7 +336,7 @@
             <div class="wave"></div>
             <div class="wave"></div>
         </div>
-        <div class="background-image"></div>
+        <div class="background-image" id="team"></div>
         <div class="cat-image"></div>
         <div class="text-content">
             <p class="fade-text">안녕하세요! 저희는 "꽁꽁 얼어붙은 얼음위를 고양이가 걸어다닙니다" 조입니다.</p>
@@ -337,15 +358,16 @@
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <form id="signupForm" class="register">
-            <form id="signupForm" class="register">
-                <h1>회원가입</h1>
-                <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
-                <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
-                <div class="input-container"><input type="password" id="signUpCheckPassword"
-                        placeholder="One more password" /></div>
-                <button type="submit" class="modal-button" id="signUpButton">회원가입 하기</button>
-                <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
-            </form>
+                <form id="signupForm" class="register">
+                    <h1>회원가입</h1>
+                    <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
+                    <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" />
+                    </div>
+                    <div class="input-container"><input type="password" id="signUpCheckPassword"
+                            placeholder="One more password" /></div>
+                    <button type="submit" class="modal-button" id="signUpButton">회원가입 하기</button>
+                    <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
+                </form>
         </div>
     </div>
 
@@ -398,7 +420,7 @@
                     <span class="title_content big">자신의 협업스타일</span>
                     <textarea class="txtfield big" id="Collaboration"></textarea>
                 </div>
-                <button type="submit" class="modal-button"  id="memberAddButton">등록하기</button>
+                <button type="submit" class="modal-button" id="memberAddButton">등록하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('memberaddModal')">취소</button>
             </form>
         </div>
@@ -419,7 +441,7 @@
             <div>
                 <div id="detail_img">
                 </div>
-                <div class = "detail_head">
+                <div class="detail_head">
                     <div class="row">
                         <span class="title_content">이름</span>
                         <span class="title_content_answer" id="nameDetail">aaa</span>
@@ -445,6 +467,45 @@
             <div style="text-align:center">
                 <button type="button" class="modal-button" onclick="closeModal('detailModal')">닫기</button>
             </div>
+        </div>
+    </div>
+
+    <!-- 멤버수정 모달 -->
+    <div id="memberUpdateModal" class="modal">
+        <div class="modal-content">
+            <form class="memberUpdate">
+                <div class="modal-header">
+                    <h1>팀원 수정</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeModal('memberUpdateModal')"></button>
+                </div>
+                <div class="row">
+                    <span class="title_content">이미지 url</span>
+                    <input class="txtfield" type="url" id="update_imgurl" ></input>
+                </div>
+                <div class="row">
+                    <span class="title_content">이름</span>
+                    <input class="txtfield" type="text" id="update_name" disabled></input>
+                </div>
+                <div class="row">
+                    <span class="title_content">mbti</span>
+                    <input class="txtfield" type="text" id="update_mbti" ></input>
+                </div>
+                <div class="row">
+                    <span class="title_content">블로그 주소</span>
+                    <input class="txtfield" type="text" id="update_blogaddress" ></input>
+                </div>
+                <div class="row">
+                    <span class="title_content big">자신의 장점</span>
+                    <textarea class="txtfield big" id="update_strengths"></textarea>
+                </div>
+                <div class="row">
+                    <span class="title_content big">자신의 협업스타일</span>
+                    <textarea class="txtfield big" id="update_collaboration"></textarea>
+                </div>
+                <button type="submit" class="modal-button" id="memberUpdateButton">수정하기</button>
+                <button type="button" class="modal-button" onclick="closeModal('memberUpdateModal')">취소</button>
+            </form>
         </div>
     </div>
 
@@ -513,6 +574,7 @@
         document.getElementById('memberAddBtn').addEventListener('click', function () {
             openModal('memberaddModal');
         });
+
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -544,23 +606,35 @@
             const lastIndex = texts.length - 1;
 
             texts.forEach((text, index) => {
-                if (scrollPercent > index * 0.1 && scrollPercent < (index + 1) * 0.1) {
-                    text.style.opacity = 1;
-                    text.style.transform = 'translateY(0)';
-                } else if (index === lastIndex && scrollPercent > index * 0.1) {
+                // 첫 번째 텍스트는 항상 보이도록 설정
+                if (index === 0) {
                     text.style.opacity = 1;
                     text.style.transform = 'translateY(0)';
                 } else {
-                    text.style.opacity = 0;
-                    text.style.transform = 'translateY(-20px)';
+                    // 스크롤 다운시 나머지 텍스트 나타남
+                    if (scrollPercent > index * 0.1 && scrollPercent < (index + 1) * 0.1) {
+                        text.style.opacity = 1;
+                        text.style.transform = 'translateY(0)';
+                    } else if (index === lastIndex && scrollPercent > index * 0.1) {
+                        text.style.opacity = 1;
+                        text.style.transform = 'translateY(0)';
+                    } else if (scrollPercent >= (index + 1) * 0.1) {
+                        text.style.opacity = 1; // 나타난 텍스트 유지
+                        text.style.transform = 'translateY(0)';
+                    } else {
+                        text.style.opacity = 0; // 스크롤 업 시 나머지 텍스트 사라짐
+                        text.style.transform = 'translateY(20px)';
+                    }
                 }
             });
 
-            // 고양이 이동 애니메이션
+            // 고양이 이미지와 배경 이미지 이동 애니메이션 유지
             const catImage = document.querySelector('.cat-image');
             if (catImage) catImage.style.transform = `translateX(${scrollPercent * 500}%)`;
+            const iceBackground = document.querySelector('.background-image');
             if (iceBackground) iceBackground.style.transform = `translateX(-${scrollPercent * 50}%)`;
         });
+
 
     </script>
 
