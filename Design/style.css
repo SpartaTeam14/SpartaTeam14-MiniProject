@@ -20,6 +20,7 @@
 input[type="password"]{
     font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
 }
+
 input[type="email"]{
     font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
 }
@@ -30,7 +31,7 @@ input[type="email"]{
 
 body::-webkit-scrollbar {
     display: none;
-  }
+}
 
 form body,
 ul,
@@ -52,25 +53,25 @@ body {
 .wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
     align-items: flex-start;
     margin: 30px;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .team-item {
-    flex: 0 0 20%;  
-    max-width: 20%; 
-    margin: 5px; 
+    flex: 0 0 20%;
+    max-width: 20%;
+    margin: 5px;
     opacity: 0.4;
-    transition: all .4s ease-in-out; 
-    height: auto; 
-    background-color: #f2f2f2; 
+    transition: all .4s ease-in-out;
+    height: auto;
+    background-color: #f2f2f2;
 }
 
 .team-item:hover {
-    flex-basis: 24%; 
-    opacity: 1; 
+    flex-basis: 24%;
+    opacity: 1;
     transition: all .4s ease-in-out;
 }
 
@@ -93,14 +94,11 @@ header {
     cursor: default;
 }
 
-#test {
-    width: 80%;
-    /* Adjust the width as needed */
+ #detail_img {
     margin: 0 auto;
-    /* Center the div horizontally */
-    padding-top: 100px;
-    /* Ensure content below the fixed header is visible */
-}
+    display:inline-block; 
+    vertical-align:top;
+} 
 
 .navbar-nav .nav-item>a {
     color: #594539;
@@ -196,7 +194,7 @@ header {
     font-size: 35px;
 }
 
-.profile-contents h2 span {
+.profile-contents h4 span {
     display: block;
     font-size: 22px;
 }
@@ -267,17 +265,25 @@ header {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
     text-align: center;
-    border-radius: 10px; 
-    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); 
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 }
 
 /* 모달창 내용 스타일 */
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 7% auto;
     padding: 1%;
     border: 1px solid #888;
     width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.modal-content-detail {
+    background-color: #fefefe;
+    margin: 7% auto;
+    padding: 1%;
+    border: 1px solid #888;
+    width: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -307,31 +313,42 @@ header {
 .title_content{
     display: flex;
     align-items: center;
-    width: 100px;
+    width: 30%;
     height: 40px;
     font-weight: bold;
 }
+
+.title_content_answer {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    height: 40px;
+}
+
 .txtfield{
-    width: 300px;
+    width: 70%;
     height: 38px;
     font-size: 13px;
     padding: 10px;
     box-sizing: border-box;
 }
+
 .txtfield.big{
-	height: 150px;
+    height: 150px;
 }
+
 .title_content.big{
-	height: 150px;
+    height: 150px;
 }
 
 textarea {
-    resize: none; 
+    resize: none;
 }
 
 .membtn-container{
     text-align: center;
 }
+
 #memberAddBtn {
     background-color: #D9BDAD; /* 새로운 배경색 지정 */
     color: white; /* 텍스트 색상을 밝게 설정하여 대비를 높임 */
@@ -348,33 +365,36 @@ textarea {
 /* moveTop 버튼 */
 .btn-moveTop {
     position: fixed;
-    right: 60px;
-    bottom: 104px;
+    right: 2%;
+    bottom: 64px;
     width: 44px;
     height: 44px;
     background-image: url(./images/btn-moveTop.jpg);
     background-color: transparent;
     border: none;
     cursor: pointer;
-  }
-  .btn-moveTop:hover {
+}
+
+.btn-moveTop:hover {
     background-image: url(./images/btn-moveTop-hover.jpg);
-  }
-  /* movebottom 버튼 */
+}
+
+/* movebottom 버튼 */
 .btn-moveBottom {
     position: fixed;
-    right: 60px;
-    bottom: 60px;
+    right: 2%;
+    bottom: 20px;
     width: 44px;
     height: 44px;
     background-image: url(./images/btn-moveBottom.jpg);
     background-color: transparent;
     border: none;
     cursor: pointer;
-  }
-  .btn-moveBottom:hover {
+}
+
+.btn-moveBottom:hover {
     background-image: url(./images/btn-moveBottom-hover.jpg);
-  }
+}
 
   /* 스크롤에 따른 헤더 변화를 위한 스타일 */
   .container {
@@ -493,3 +513,49 @@ textarea {
   }
 
   
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+/* 자기소개페이지 모달버튼 */
+.modal-button-detail {
+    width: 21px;
+    height: 21px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.modal-button {
+    padding:1%;
+    border:none;
+    cursor:pointer
+}
+
+#edit {
+    background-image: url(./images/edit.png);
+}
+
+#delete {
+    background-image: url(./images/delete.png);
+}
+
+#edit:hover {
+    background-image: url(./images/edit-hover.png);
+}
+
+#delete:hover {
+    background-image: url(./images/delete-hover.png);
+}
+
+.profile-picture {
+    width: 150px;
+    height: 230px;
+
+}
+
+#detail_img{
+   margin-top: 10px;
+}

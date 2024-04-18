@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>14조</title>
     <link rel="stylesheet" href="style.css">
 
@@ -25,6 +25,47 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        $("#detailBtn").click(async function () {
+            const membersCol = collection(db, "member");
+            onSnapshot(membersCol, (snapshot) => {
+                const memberList = [];
+                snapshot.docs.forEach((doc) => {
+                    const data = doc.data();
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            memberList.push(data[key]);
+
+                        }
+                    }
+                });
+                const filteredData = memberList.filter(item => item.name === '김세림'); //여기에 누른 카드의 이름값 넣어야함
+
+                // 필터링된 요소들의 value 값을 변수에 할당
+                let name, mbti, strengths, collaboration, image, blog;
+                detail_img.innerHTML = ``;
+
+                filteredData.forEach(item => {
+                    name = item.name;
+                    mbti = item.mbti;
+                    strengths = item.strengths;
+                    collaboration = item.collaboration;
+                    image = item.image || 'images/purple.png';
+                    blog = item.blog;
+                });
+
+                document.getElementById('nameDetail').innerHTML = name;
+                document.getElementById('mbtiDetail').innerHTML = mbti;
+                document.getElementById('blogDetail').innerHTML = blog;
+                document.getElementById('strengthsDetail').innerHTML = strengths;
+                document.getElementById('collaborationDetail').innerHTML = collaboration;
+                let temp_html = `<img class="profile-picture" src="${image}" alt="프로필 사진">`;
+
+                detail_img.innerHTML += temp_html;
+
+            });
+        });
+
 
         // 실시간으로 팀원 데이터를 로드
         function listenToTeamMembers() {
@@ -66,7 +107,7 @@
 
                     <img src="${imageUrl}">
                     <div class="profile-contents">
-                        <h2>${member.name} <span>${member.mbti}</span></h2>
+                        <h2>${member.name} </h2><h4><span>${member.mbti}</span></h4>
                         <p>${member.strengths}</p>
                     </div>
                 </div>
@@ -77,14 +118,15 @@
             addClickListenersToTeamItems();
         }
         function addClickListenersToTeamItems() {
-    const teamCards = document.querySelectorAll('.team-item');
-    teamCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const name = card.querySelector('h2').textContent;
-            alert('클릭한 팀원: ' + name);
-        });
-    });
-}
+            const teamCards = document.querySelectorAll('.team-item');
+            teamCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const name = card.querySelector('h2').textContent;
+                    openModal('detailModal');
+                    alert('클릭한 팀원: ' + name);
+                });
+            });
+        }
         // 팀원 데이터를 Firestore에 추가하는 함수
         async function addTeamMember() {
             if (auth.currentUser) { // 사용자 로그인 상태 확인
@@ -293,6 +335,7 @@
     <hr>
     <div class="membtn-container">
         <button type="button" id="memberAddBtn">팀원 추가</button>
+        <button type="button" id="detailBtn">팀원 자세히</button>
     </div>
     <div id="member" class="wrapper">
         </ul>
@@ -367,6 +410,51 @@
             </form>
         </div>
     </div>
+
+    <!-- 자기소개페이지 모달 -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content-detail">
+            <div class="modal-header">
+                <h2>팀원소개페이지</h2>
+                <div>
+                    <button type="button" class="modal-button-detail" id="edit"></button>
+                    <button type="button" class="modal-button-detail" id="delete"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeModal('detailModal')"></button>
+                </div>
+            </div>
+            <div>
+                <div id="detail_img">
+                </div>
+                <div style="display:inline-block; margin:20px">
+                    <div class="row">
+                        <span class="title_content">이름</span>
+                        <span class="title_content_answer" id="nameDetail">aaa</span>
+                    </div>
+                    <div class="row">
+                        <span class="title_content">mbti</span>
+                        <span class="title_content_answer" id="mbtiDetail">cute</span>
+                    </div>
+                    <div class="row">
+                        <span class="title_content">블로그 주소</span>
+                        <span class="title_content_answer" id="blogDetail">ttt </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="title_content">자신의 장점</span>
+                <span class="title_content_answer" id="strengthsDetail">good</span>
+            </div>
+            <div class="row">
+                <span class="title_content">자신의 <br> 협업스타일</span>
+                <span class="title_content_answer" id="collaborationDetail">good</span>
+            </div>
+            <div style="text-align:center">
+                <button type="button" class="modal-button" onclick="closeModal('detailModal')">닫기</button>
+            </div>
+        </div>
+    </div>
+
     <button onclick="moveToTop()" class="btn-moveTop"></button>
     <button onclick="moveToBottom()" class="btn-moveBottom"></button>
     <script>
@@ -432,6 +520,9 @@
         document.getElementById('memberAddBtn').addEventListener('click', function () {
             openModal('memberaddModal');
         });
+        document.getElementById('detailBtn').addEventListener('click', function () {
+            openModal('detailModal');
+        });
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -449,18 +540,8 @@
                 logout();
             });
 
-            const teamCards = document.querySelectorAll('.team-item');
-            // 각 카드에 클릭 이벤트 리스너 추가
-            teamCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    console.log("click")
-                    // 카드에서 팀원의 이름을 추출
-                    const name = card.querySelector('h2').textContent;
-                    alert('클릭한 팀원: ' + name);
-                });
-            });
         });
-        
+
 
 
 
