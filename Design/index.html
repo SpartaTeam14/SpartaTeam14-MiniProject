@@ -337,11 +337,13 @@
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <form id="signupForm" class="register">
+            <form id="signupForm" class="register">
                 <h1>회원가입</h1>
                 <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
                 <div class="input-container"><input type="password" id="signUpCheckPassword"
                         placeholder="One more password" /></div>
+                <button type="submit" class="modal-button" id="signUpButton">회원가입 하기</button>
                 <button type="submit" class="modal-button" id="signUpButton">회원가입 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
             </form>
@@ -397,7 +399,7 @@
                     <span class="title_content big">자신의 협업스타일</span>
                     <textarea class="txtfield big" id="Collaboration"></textarea>
                 </div>
-                <button type="submit" id="memberAddButton">등록하기</button>
+                <button type="submit" class="modal-button"  id="memberAddButton">등록하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('memberaddModal')">취소</button>
             </form>
         </div>
