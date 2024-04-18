@@ -43,7 +43,8 @@
 
                 // 필터링된 요소들의 value 값을 변수에 할당
                 let name, mbti, strengths, collaboration, image, blog;
-
+                detail_img.innerHTML = ``;
+                
                 filteredData.forEach(item => {
                     name = item.name;
                     mbti = item.mbti;
@@ -58,7 +59,6 @@
                 document.getElementById('blogDetail').innerHTML = blog;
                 document.getElementById('strengthsDetail').innerHTML = strengths;
                 document.getElementById('collaborationDetail').innerHTML = collaboration;
-                detail_img.innerHTML = ``;
                 let temp_html = `<img class="profile-picture" src="${image}" alt="프로필 사진">`;
 
                 detail_img.innerHTML += temp_html;
