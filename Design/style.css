@@ -309,7 +309,7 @@ header {
     padding: 1%;
     border: 8px solid #ceb3a1;
     border-radius: 8px;
-    width: 30%;
+    width: 35%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -323,6 +323,19 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.modal-content-goal{
+    background-color: #fcf6f2;
+    margin: 7% auto;
+    padding: 3%;
+    border: 8px solid #ceb3a1;
+    border-radius: 8px;
+    width: 40%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.teamGoal li{
+    margin-top: 10px;
+}
 /* 여백조정 */
 .input-container {
     margin-bottom: 10px;
@@ -688,4 +701,9 @@ body {
 
 .modal-button:hover {
     background-color: #c18b79;
+}
+
+.teamGoal {
+    text-align: left;
+    padding: 20px;
 }

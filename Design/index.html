@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>14조</title>
     <link rel="stylesheet" href="style.css">
-  
+
 </head>
 
 <body>
@@ -450,7 +450,7 @@
         <div class="background-image" id="team"></div>
         <div class="cat-image" id="cat-image"></div>
         <div class="text-content">
-            <p class="fade-text"> 꽁꽁 얼어붙은 얼음위를 고양이가 걸어다닙니다 </p>
+            <p class="fade-text"> 꽁꽁 얼어붙은 한강 위를 고양이가 걸어다닙니다 </p>
             <p class="fade-text"> 저희는 멋진 백엔드 개발자가 되는것을 목표를 가진 "꽁냥이" 조입니다 </p>
             <p class="fade-text"> 꽁냥이 동료가 되실분은 팀원카드를 작성해주세요! </p>
             <p class="fade-text"> 우리 모두 앞으로 파이팅!!! </p>
@@ -587,8 +587,8 @@
             <form class="memberUpdate">
                 <div class="modal-header">
                     <h1>팀원 수정</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        id="btn-close" onclick="closeModal('memberUpdateModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"
+                        onclick="closeModal('memberUpdateModal')"></button>
                 </div>
                 <div class="row">
                     <span class="title_content">이미지 url</span>
@@ -615,16 +615,33 @@
                     <textarea class="txtfield big" id="update_collaboration"></textarea>
                 </div>
                 <button type="submit" class="modal-button" id="memberUpdateButton">수정하기</button>
-                <button type="button" class="modal-button" id="closebutton" onclick="closeModal('memberUpdateModal')">취소</button>
+                <button type="button" class="modal-button" id="closebutton"
+                    onclick="closeModal('memberUpdateModal')">취소</button>
             </form>
         </div>
     </div>
 
     <div id="teamGoalModal" class="modal">
-        <div class="modal-content">
-            <form id="loginForm">
-                <h1>우리 팀 목표</h1>
-                <p>이쁜말~</p>
+        <div class="modal-content-goal">
+            <form id="teamGoalForm">
+                <div class="modal-header">
+                    <h1>🥅우리 팀 목표</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"
+                        onclick="closeModal('teamGoalModal')"></button>
+                </div>
+                <div class="teamGoal">
+                    <h5>
+                        <ul class="inside">
+                            <li>😺이쁜 말로 소통하기</li>
+                            <li>😺자리를 비울 때는 다른 조원들에게 꼭 알리기</li>
+                            <li>😺늦잠 자지 않기</li>
+                            <li>😺어려운 부분은 같이 고민해주기</li>
+                            <li>😺매일 오전 9시 ~ 11시 강의 열심히 듣기</li>
+                            <li>😺작업 완료 후 pull request을 통해서 merge하기</li>
+                            <li>😺브랜치 만들기 전에 이슈생성하기</li>
+                        </ul>
+                    </h5>
+                </div>
             </form>
         </div>
     </div>
