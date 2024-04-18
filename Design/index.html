@@ -78,6 +78,7 @@
             // edit 버튼에 이벤트 리스너 추가
             document.getElementById('edit').addEventListener('click', function () {
                 const name = document.getElementById('nameDetail').textContent;
+                closeModal('detailModal');
                 displayMemberDetails(name, 'Update');
             });
         });
@@ -168,11 +169,45 @@
             }
         }
 
+        
+
         // 팀원 추가 폼 제출 이벤트 리스너
         document.querySelector('.memberAdd').addEventListener('submit', function (event) {
             event.preventDefault(); // 폼 기본 제출 방지
             addTeamMember();
         });
+
+        // 팀원 데이터를 Firestore에 추가하는 함수
+        async function updateTeamMember() {
+            if (auth.currentUser) { // 사용자 로그인 상태 확인
+                const memberData = {
+                    blog: document.getElementById('update_blogaddress').value,
+                    collaboration: document.getElementById('update_collaboration').value,
+                    image: document.getElementById('update_imgurl').value,
+                    mbti: document.getElementById('update_mbti').value,
+                    name: document.getElementById('update_name').value,
+                    strengths: document.getElementById('update_strengths').value
+                };
+
+                try {
+                    await setDoc(doc(db, "member", auth.currentUser.email), {
+                        [memberData.name]: memberData // 이름을 키로 사용하여 멤버 데이터 저장
+                    }, { merge: true });
+                    closeModal('memberUpdateModal');
+                    alert('팀원이 성공적으로 수정되었습니다.');
+                } catch (error) {
+                    console.error("팀원 추가 실패: ", error);
+                    alert('팀원 추가 실패: ' + error.message);
+                }
+            }
+        }
+
+        // 팀원 수정 폼 제출 이벤트 리스너
+        document.querySelector('.memberUpdate').addEventListener('submit', function (event) {
+            event.preventDefault(); // 폼 기본 제출 방지
+            updateTeamMember();
+        });
+
         // 회원가입
         document.getElementById('signupForm').addEventListener('submit', async function (event) {
             event.preventDefault();
