@@ -18,9 +18,7 @@
         import firebaseConfig from '../firebaseConfig.js';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDocs, collection, onSnapshot, deleteDoc,deleteField, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -31,17 +29,29 @@
             onSnapshot(membersCol, (snapshot) => {
                 const memberList = [];
                 snapshot.docs.forEach((doc) => {
+                    // 문서 id(사용자 이메일) - email비교하기 위함
                     const data = doc.data();
+
+                    const email = doc.id;
                     for (const key in data) {
                         if (data.hasOwnProperty(key)) {
-                            memberList.push(data[key]);
+
+                            const memberData = data[key];
+                            memberData.email = email;
+                            memberList.push(memberData);
                         }
                     }
                 });
+
                 // 클릭된 팀 카드의 이름으로 데이터 필터링
-                const filteredData = memberList.filter(item => item.name.trim() === memberName.trim()); //공백제거
-                // 필터링된 요소들의 value 값을 변수에 할당
+                const filteredData = memberList.filter(item => item.name.trim() === memberName.trim());
                 let name, mbti, strengths, collaboration, image, blog;
+
+                // 현재 로그인한 사용자와 데이터의 생성자 비교
+                const currentUserEmail = auth.currentUser ? auth.currentUser.email : null;
+
+                let isCurrentUser = false; // 현재 사용자가 데이터의 소유자인지 여부
+
                 filteredData.forEach(item => {
                     name = item.name;
                     mbti = item.mbti;
@@ -49,6 +59,10 @@
                     collaboration = item.collaboration;
                     image = item.image;
                     blog = item.blog;
+                    console.log(item.email)
+                    if (item.email && currentUserEmail && item.email === currentUserEmail) {
+                        isCurrentUser = true;
+                    }
                 });
                 if (modalKind == 'Detail') {
                     detail_img.innerHTML = ``;
@@ -59,6 +73,20 @@
                     document.getElementById('collaborationDetail').innerHTML = collaboration;
                     detail_img.innerHTML += `<img class="profile-picture" src="${image}" alt="프로필 사진">`;
 
+                    const editButton = document.getElementById('edit');
+                    const deleteButton = document.getElementById('delete');
+                    console.log(isCurrentUser)
+                    ///            console.log(item.email)
+                    console.log(currentUserEmail)
+                    if (isCurrentUser) {
+                        // 현재 사용자가 데이터의 소유자라면 버튼을 표시
+                        editButton.style.display = 'block';
+                        deleteButton.style.display = 'block';
+                    } else {
+                        // 그렇지 않다면 버튼을 숨김
+                        editButton.style.display = 'none';
+                        deleteButton.style.display = 'none';
+                    }
                     openModal('detailModal');
                 } else if (modalKind == 'Update') {
                     document.getElementById('update_name').value = name;
@@ -82,6 +110,7 @@
                 displayMemberDetails(name, 'Update');
             });
         });
+
         // 실시간으로 팀원 데이터를 로드
         function listenToTeamMembers() {
             const membersCol = collection(db, "member");
@@ -104,7 +133,33 @@
             listenToTeamMembers();
         });
 
+   // 팀원 데이터를 Firestore에서 삭제하는 함수
+async function deleteTeamMember(memberEmail, memberName) {
+    try {
+        const memberRef = doc(db, "member", memberEmail);
+        // 문서에서 특정 필드만 삭제
+        await updateDoc(memberRef, {
+            [memberName]: deleteField()
+        });
+        closeModal('memberaddModal');
+        closeModal('detailModal');
+        closeModal('memberUpdateModal');
+
+        listenToTeamMembers(); // UI에서도 해당 멤버 카드를 삭제
+    } catch (error) {
+        console.error("팀원 삭제 실패: ", error);
+        alert('팀원 삭제 실패: ' + error.message);
+    }
+}
+
+
+
+
         function updateTeamMemberUI(members) {
+            if (!members) {
+                console.log('멤버 데이터가 없습니다.');
+                return;
+            }
             const teamContainer = document.getElementById('member');
             teamContainer.innerHTML = '';
 
@@ -157,8 +212,12 @@
                     await setDoc(doc(db, "member", auth.currentUser.email), {
                         [memberData.name]: memberData // 이름을 키로 사용하여 멤버 데이터 저장
                     }, { merge: true });
-                    alert('팀원이 성공적으로 추가되었습니다.');
                     closeModal('memberaddModal');
+                    closeModal('detailModal');
+
+                    alert('팀원이 성공적으로 추가되었습니다.');
+                  
+
                 } catch (error) {
                     console.error("팀원 추가 실패: ", error);
                     alert('팀원 추가 실패: ' + error.message);
@@ -168,6 +227,21 @@
             }
         }
 
+        // 삭제 버튼에 이벤트 리스너 추가
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButton = document.getElementById('delete');
+            if (deleteButton) {
+                deleteButton.addEventListener('click', function () {
+                    const memberName = document.getElementById('nameDetail').textContent.trim();
+                    const memberEmail = auth.currentUser.email; // 현재 로그인한 사용자의 이메일
+                    if (confirm('해당 카드을 정말 삭제하시겠습니까?')) {
+        deleteTeamMember(memberEmail, memberName);
+    }
+
+                  
+                });
+            }
+        });
 
 
         // 팀원 추가 폼 제출 이벤트 리스너
@@ -296,7 +370,10 @@
 
             }
         });
+      
 
+
+        
         function validateLoginButton() {
             const email = document.getElementById('signInEmail').value;
             const password = document.getElementById('signInPassword').value;
@@ -413,7 +490,7 @@
                 <h1>로그인</h1>
                 <div class="input-container"><input type="email" id="signInEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signInPassword" placeholder="Password" /></div>
-                <button type="submit" class="modal-button"  id="signInButton">로그인 하기</button>
+                <button type="submit" class="modal-button" id="signInButton">로그인 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
                 <div id="loginError" style="color: red; display: none;">이메일 또는 비밀번호를 확인해주세요.</div>
 
@@ -510,7 +587,8 @@
             <form class="memberUpdate">
                 <div class="modal-header">
                     <h1>팀원 수정</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id ="btn-close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="btn-close"></button>
                 </div>
                 <div class="row">
                     <span class="title_content">이미지 url</span>
@@ -595,6 +673,18 @@
 
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
+            // 로그인 모달을 닫을 때 추가 로직
+    if (modalId === 'loginModal') {
+        // 입력 필드 초기화
+        document.getElementById('signInEmail').value = '';
+        document.getElementById('signInPassword').value = '';
+        
+        // 에러 메시지 숨기기
+        document.getElementById('loginError').style.display = 'none';
+    }else {
+        document.getElementById(modalId).style.display = 'none';
+
+    }
         }
 
         document.getElementById('signupBtn').addEventListener('click', function () {
@@ -643,43 +733,41 @@
 
 
         window.addEventListener('scroll', () => {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    const maxScroll = document.body.scrollHeight - window.innerHeight;
-    const scrollPercent = scrollY / maxScroll;
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollY / maxScroll;
 
-    const texts = document.querySelectorAll('.fade-text');
-    const lastIndex = texts.length - 1;
+            const texts = document.querySelectorAll('.fade-text');
+            const lastIndex = texts.length - 1;
 
-    texts.forEach((text, index) => {
-        // 첫 번째 텍스트는 항상 보이도록 설정
-        if (index === 0) {
-            text.style.opacity = 1;
-            text.style.transform = 'translateY(0)';
-        } else {
-            // 스크롤 다운시 나머지 텍스트 나타남
-            if (scrollPercent > index * 0.1 && scrollPercent < (index + 1) * 0.1) {
-                text.style.opacity = 1;
-                text.style.transform = 'translateY(0)';
-            } else if (index === lastIndex && scrollPercent > index * 0.1) {
-                text.style.opacity = 1;
-                text.style.transform = 'translateY(0)';
-            } else if (scrollPercent >= (index + 1) * 0.1) {
-                text.style.opacity = 1; // 나타난 텍스트 유지
-                text.style.transform = 'translateY(0)';
-            } else {
-                text.style.opacity = 0; // 스크롤 업 시 나머지 텍스트 사라짐
-                text.style.transform = 'translateY(20px)';
-            }
-        }
-    });
+            texts.forEach((text, index) => {
+                // 첫 번째 텍스트는 항상 보이도록 설정
+                if (index === 0) {
+                    text.style.opacity = 1;
+                    text.style.transform = 'translateY(0)';
+                } else {
+                    // 스크롤 다운시 나머지 텍스트 나타남
+                    if (scrollPercent > index * 0.1 && scrollPercent < (index + 1) * 0.1) {
+                        text.style.opacity = 1;
+                        text.style.transform = 'translateY(0)';
+                    } else if (index === lastIndex && scrollPercent > index * 0.1) {
+                        text.style.opacity = 1;
+                        text.style.transform = 'translateY(0)';
+                    } else if (scrollPercent >= (index + 1) * 0.1) {
+                        text.style.opacity = 1; // 나타난 텍스트 유지
+                        text.style.transform = 'translateY(0)';
+                    } else {
+                        text.style.opacity = 0; // 스크롤 업 시 나머지 텍스트 사라짐
+                        text.style.transform = 'translateY(20px)';
+                    }
+                }
+            });
 
-    // 고양이 이미지와 배경 이미지 이동 애니메이션 유지
-    const catImage = document.querySelector('.cat-image');
-    if (catImage) catImage.style.transform = `translateX(${scrollPercent * 300}%)`;
-    const iceBackground = document.querySelector('.background-image');
-});
-
-
+            // 고양이 이미지와 배경 이미지 이동 애니메이션 유지
+            const catImage = document.querySelector('.cat-image');
+            if (catImage) catImage.style.transform = `translateX(${scrollPercent * 300}%)`;
+            const iceBackground = document.querySelector('.background-image');
+        });
 
     </script>
 
