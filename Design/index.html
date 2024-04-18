@@ -588,7 +588,7 @@
                 <div class="modal-header">
                     <h1>팀원 수정</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        id="btn-close"></button>
+                        id="btn-close" onclick="closeModal('memberUpdateModal')"></button>
                 </div>
                 <div class="row">
                     <span class="title_content">이미지 url</span>
@@ -615,7 +615,7 @@
                     <textarea class="txtfield big" id="update_collaboration"></textarea>
                 </div>
                 <button type="submit" class="modal-button" id="memberUpdateButton">수정하기</button>
-                <button type="button" class="modal-button" id="closebutton">취소</button>
+                <button type="button" class="modal-button" id="closebutton" onclick="closeModal('memberUpdateModal')">취소</button>
             </form>
         </div>
     </div>
@@ -696,18 +696,6 @@
 
         document.getElementById('memberAddBtn').addEventListener('click', function () {
             openModal('memberaddModal');
-        });
-
-        // 취소 버튼 클릭 시
-        document.getElementById('closebutton').addEventListener('click', function () {
-            closeModal('memberUpdateModal');
-            openModal('detailModal');
-        });
-
-        // btn-close 버튼 클릭 시
-        document.getElementById('btn-close').addEventListener('click', function () {
-            closeModal('memberUpdateModal');
-            openModal('detailModal');
         });
 
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
