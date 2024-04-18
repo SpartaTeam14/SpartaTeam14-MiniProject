@@ -454,10 +454,25 @@ textarea {
     transition: opacity 0.5s ease-out, transform 0.3s ease-out; /* 투명도 및 위치 변화 속도 조정 */
     transform: translateY(-20px); /* 초기 위치 설정 */
 }
+
+/* 첫 번째 문단에 특정 폰트, 크기, 색상 적용 */
+.fade-text:first-child {
+    font-family: "NIXGONFONTS_B", sans-serif;
+    font-size: 43px;
+    color: #00A4CCFF; /* 약간의 푸른색조 */
+}
+
+/* 두 번째 및 세 번째 문단은 더 작고 가는 폰트로 */
+.fade-text:nth-child(2), .fade-text:nth-child(3),.fade-text:nth-child(4) {
+    font-family: "NIXGONFONTS_M", sans-serif; /* 가볍고 얇은 폰트 */
+    font-size: 18px; /* 작은 폰트 크기 */
+    color: #333; /* 가독성을 위한 어두운 색상 */
+}
+
 .fade-text:last-child { /* 마지막 p 태그만 특별하게 */
-    font-size: 36px; 
+    font-size: 25px; 
     font-weight: bold; 
-    color: rgb(130, 94, 94);
+    color: rgb(97, 107, 118);
 }
 @keyframes background-image {
     from {
