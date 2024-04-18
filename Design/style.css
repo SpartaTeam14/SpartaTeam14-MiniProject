@@ -705,3 +705,7 @@ body {
     text-align: left;
     padding: 20px;
 }
+
+.teamGoal a{
+    color: inherit;;
+}
