@@ -383,14 +383,14 @@ textarea {
     bottom: 64px;
     width: 44px;
     height: 44px;
-    background-image: url(./images/btn-moveTop.jpg);
+    background-image: url(./images/btn-moveTop.png);
     background-color: transparent;
     border: none;
     cursor: pointer;
 }
 
 .btn-moveTop:hover {
-    background-image: url(./images/btn-moveTop-hover.jpg);
+    background-image: url(./images/btn-moveTop-hover.png);
 }
 
 /* movebottom 버튼 */
@@ -400,14 +400,14 @@ textarea {
     bottom: 20px;
     width: 44px;
     height: 44px;
-    background-image: url(./images/btn-moveBottom.jpg);
+    background-image: url(./images/btn-moveBottom.png);
     background-color: transparent;
     border: none;
     cursor: pointer;
 }
 
 .btn-moveBottom:hover {
-    background-image: url(./images/btn-moveBottom-hover.jpg);
+    background-image: url(./images/btn-moveBottom-hover.png);
 }
 
   /* 스크롤에 따른 헤더 변화를 위한 스타일 */
