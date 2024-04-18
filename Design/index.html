@@ -337,12 +337,13 @@
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <form id="signupForm" class="register">
+            <form id="signupForm" class="register">
                 <h1>회원가입</h1>
                 <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
                 <div class="input-container"><input type="password" id="signUpCheckPassword"
                         placeholder="One more password" /></div>
-                <button type="submit" id="signUpButton">회원가입 하기</button>
+                <button type="submit" class="modal-button" id="signUpButton">회원가입 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
             </form>
         </div>
@@ -356,7 +357,7 @@
                 <h1>로그인</h1>
                 <div class="input-container"><input type="email" id="signInEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signInPassword" placeholder="Password" /></div>
-                <button type="submit" id="signInButton">로그인 하기</button>
+                <button type="submit" class="modal-button" id="signInButton">로그인 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
                 <div id="loginError" style="color: red; display: none;">이메일 또는 비밀번호를 확인해주세요.</div>
 
@@ -397,7 +398,7 @@
                     <span class="title_content big">자신의 협업스타일</span>
                     <textarea class="txtfield big" id="Collaboration"></textarea>
                 </div>
-                <button type="submit" id="memberAddButton">등록하기</button>
+                <button type="submit" class="modal-button"  id="memberAddButton">등록하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('memberaddModal')">취소</button>
             </form>
         </div>
