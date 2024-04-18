@@ -274,19 +274,19 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#team">team_info</a>
+                            <a class="nav-link" aria-current="page" href="#team">팀 설명</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#member">memeber_info</a>
+                            <a class="nav-link" aria-current="page" href="#member">멤버 카드</a>
                         </li>
                         </li>
                     </ul>
                     <ul class="navbar-nav" id="user">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#loginModal" id="loginBtn">Login</a>
+                            <a class="nav-link" aria-current="page" href="#loginModal" id="loginBtn">로그인</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#registerModal" id="signupBtn">Register</a>
+                            <a class="nav-link" aria-current="page" href="#registerModal" id="signupBtn">회원가입</a>
                         </li>
 
                         <!-- 사용자 이메일 및 로그아웃 버튼 -->
@@ -294,7 +294,7 @@
                             <span class="nav-link" id="userEmailText"></span>
                         </li>
                         <li class="nav-item" style="display: none;" id="logoutBtn">
-                            <a class="nav-link" href="#" id="logoutLink">Logout</a>
+                            <a class="nav-link" href="#" id="logoutLink">로그아웃</a>
                         </li>
                     </ul>
                 </div>
@@ -315,7 +315,7 @@
             <div class="wave"></div>
             <div class="wave"></div>
         </div>
-        <div class="background-image"></div>
+        <div class="background-image" id="team"></div>
         <div class="cat-image"></div>
         <div class="text-content">
             <p class="fade-text">안녕하세요! 저희는 "꽁꽁 얼어붙은 얼음위를 고양이가 걸어다닙니다" 조입니다.</p>
@@ -342,7 +342,7 @@
                 <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
                 <div class="input-container"><input type="password" id="signUpCheckPassword"
                         placeholder="One more password" /></div>
-                <button type="submit" id="signUpButton">회원가입 하기</button>
+                <button type="submit" class="modal-button" id="signUpButton">회원가입 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
             </form>
         </div>
@@ -356,7 +356,7 @@
                 <h1>로그인</h1>
                 <div class="input-container"><input type="email" id="signInEmail" placeholder="Email" /></div>
                 <div class="input-container"><input type="password" id="signInPassword" placeholder="Password" /></div>
-                <button type="submit" id="signInButton">로그인 하기</button>
+                <button type="submit" class="modal-button"  id="signInButton">로그인 하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('loginModal')">취소</button>
                 <div id="loginError" style="color: red; display: none;">이메일 또는 비밀번호를 확인해주세요.</div>
 
