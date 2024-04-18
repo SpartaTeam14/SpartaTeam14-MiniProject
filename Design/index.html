@@ -60,7 +60,7 @@
                     detail_img.innerHTML += `<img class="profile-picture" src="${image}" alt="프로필 사진">`;
 
                     openModal('detailModal');
-                } else if (modalKind == 'Update'){
+                } else if (modalKind == 'Update') {
                     document.getElementById('update_name').value = name;
                     document.getElementById('update_mbti').value = mbti;
                     document.getElementById('update_blogaddress').value = blog;
@@ -69,12 +69,12 @@
                     document.getElementById('update_imgurl').value = image;
 
                     openModal('memberUpdateModal');
-                 }
-        });
-    }
+                }
+            });
+        }
 
-    // DOMContentLoaded 이벤트 리스너 추가
-    document.addEventListener('DOMContentLoaded', function() {
+        // DOMContentLoaded 이벤트 리스너 추가
+        document.addEventListener('DOMContentLoaded', function () {
             // edit 버튼에 이벤트 리스너 추가
             document.getElementById('edit').addEventListener('click', function () {
                 const name = document.getElementById('nameDetail').textContent;
@@ -133,7 +133,6 @@
         }
         function addClickListenersToTeamItems() {
             const teamCards = document.querySelectorAll('.team-item');
-            console.log(teamCards);
             teamCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const name = card.querySelector('h2').textContent;
@@ -169,7 +168,7 @@
             }
         }
 
-        
+
 
         // 팀원 추가 폼 제출 이벤트 리스너
         document.querySelector('.memberAdd').addEventListener('submit', function (event) {
@@ -511,24 +510,23 @@
             <form class="memberUpdate">
                 <div class="modal-header">
                     <h1>팀원 수정</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        onclick="closeModal('memberUpdateModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id ="btn-close"></button>
                 </div>
                 <div class="row">
                     <span class="title_content">이미지 url</span>
-                    <input class="txtfield" type="url" id="update_imgurl"/>
+                    <input class="txtfield" type="url" id="update_imgurl" />
                 </div>
                 <div class="row">
                     <span class="title_content">이름</span>
-                    <input class="txtfield" type="text" id="update_name" disabled/>
+                    <input class="txtfield" type="text" id="update_name" disabled />
                 </div>
                 <div class="row">
                     <span class="title_content">mbti</span>
-                    <input class="txtfield" type="text" id="update_mbti"/>
+                    <input class="txtfield" type="text" id="update_mbti" />
                 </div>
                 <div class="row">
                     <span class="title_content">블로그 주소</span>
-                    <input class="txtfield" type="text" id="update_blogaddress"/>
+                    <input class="txtfield" type="text" id="update_blogaddress" />
                 </div>
                 <div class="row">
                     <span class="title_content big">자신의 장점</span>
@@ -539,7 +537,7 @@
                     <textarea class="txtfield big" id="update_collaboration"></textarea>
                 </div>
                 <button type="submit" class="modal-button" id="memberUpdateButton">수정하기</button>
-                <button type="button" class="modal-button" onclick="closeModal('memberUpdateModal')">취소</button>
+                <button type="button" class="modal-button" id="closebutton">취소</button>
             </form>
         </div>
     </div>
@@ -608,6 +606,18 @@
 
         document.getElementById('memberAddBtn').addEventListener('click', function () {
             openModal('memberaddModal');
+        });
+
+        // 취소 버튼 클릭 시
+        document.getElementById('closebutton').addEventListener('click', function () {
+            closeModal('memberUpdateModal');
+            openModal('detailModal');
+        });
+
+        // btn-close 버튼 클릭 시
+        document.getElementById('btn-close').addEventListener('click', function () {
+            closeModal('memberUpdateModal');
+            openModal('detailModal');
         });
 
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
