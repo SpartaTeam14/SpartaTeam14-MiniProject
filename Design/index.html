@@ -536,31 +536,43 @@
 
 
         window.addEventListener('scroll', () => {
-            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-            const maxScroll = document.body.scrollHeight - window.innerHeight;
-            const scrollPercent = scrollY / maxScroll;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    const scrollPercent = scrollY / maxScroll;
 
-            const texts = document.querySelectorAll('.fade-text');
-            const lastIndex = texts.length - 1;
+    const texts = document.querySelectorAll('.fade-text');
+    const lastIndex = texts.length - 1;
 
-            texts.forEach((text, index) => {
-                if (scrollPercent > index * 0.1 && scrollPercent < (index + 1) * 0.1) {
-                    text.style.opacity = 1;
-                    text.style.transform = 'translateY(0)';
-                } else if (index === lastIndex && scrollPercent > index * 0.1) {
-                    text.style.opacity = 1;
-                    text.style.transform = 'translateY(0)';
-                } else {
-                    text.style.opacity = 0;
-                    text.style.transform = 'translateY(-20px)';
-                }
-            });
+    texts.forEach((text, index) => {
+        // 첫 번째 텍스트는 항상 보이도록 설정
+        if (index === 0) {
+            text.style.opacity = 1;
+            text.style.transform = 'translateY(0)';
+        } else {
+            // 스크롤 다운시 나머지 텍스트 나타남
+            if (scrollPercent > index * 0.1 && scrollPercent < (index + 1) * 0.1) {
+                text.style.opacity = 1;
+                text.style.transform = 'translateY(0)';
+            } else if (index === lastIndex && scrollPercent > index * 0.1) {
+                text.style.opacity = 1;
+                text.style.transform = 'translateY(0)';
+            } else if (scrollPercent >= (index + 1) * 0.1) {
+                text.style.opacity = 1; // 나타난 텍스트 유지
+                text.style.transform = 'translateY(0)';
+            } else {
+                text.style.opacity = 0; // 스크롤 업 시 나머지 텍스트 사라짐
+                text.style.transform = 'translateY(20px)';
+            }
+        }
+    });
 
-            // 고양이 이동 애니메이션
-            const catImage = document.querySelector('.cat-image');
-            if (catImage) catImage.style.transform = `translateX(${scrollPercent * 500}%)`;
-            if (iceBackground) iceBackground.style.transform = `translateX(-${scrollPercent * 50}%)`;
-        });
+    // 고양이 이미지와 배경 이미지 이동 애니메이션 유지
+    const catImage = document.querySelector('.cat-image');
+    if (catImage) catImage.style.transform = `translateX(${scrollPercent * 500}%)`;
+    const iceBackground = document.querySelector('.background-image');
+    if (iceBackground) iceBackground.style.transform = `translateX(-${scrollPercent * 50}%)`;
+});
+
 
     </script>
 
