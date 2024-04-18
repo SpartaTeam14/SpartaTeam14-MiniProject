@@ -26,7 +26,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        function displayMemberDetails(memberName) {
+        function displayMemberDetails(memberName, modalKind) {
             const membersCol = collection(db, "member");
             onSnapshot(membersCol, (snapshot) => {
                 const memberList = [];
@@ -42,7 +42,6 @@
                 const filteredData = memberList.filter(item => item.name.trim() === memberName.trim()); //공백제거
                 // 필터링된 요소들의 value 값을 변수에 할당
                 let name, mbti, strengths, collaboration, image, blog;
-                detail_img.innerHTML = ``;
                 filteredData.forEach(item => {
                     name = item.name;
                     mbti = item.mbti;
@@ -51,16 +50,38 @@
                     image = item.image;
                     blog = item.blog;
                 });
-                document.getElementById('nameDetail').innerHTML = name;
-                document.getElementById('mbtiDetail').innerHTML = mbti;
-                document.getElementById('blogDetail').innerHTML = `<a href="${blog}">${blog}</a>`;
-                document.getElementById('strengthsDetail').innerHTML = strengths;
-                document.getElementById('collaborationDetail').innerHTML = collaboration;
-                detail_img.innerHTML += `<img class="profile-picture" src="${image}" alt="프로필 사진">`;;
+                if (modalKind == 'Detail') {
+                    detail_img.innerHTML = ``;
+                    document.getElementById('nameDetail').innerHTML = name;
+                    document.getElementById('mbtiDetail').innerHTML = mbti;
+                    document.getElementById('blogDetail').innerHTML = `<a href="${blog}">${blog}</a>`;
+                    document.getElementById('strengthsDetail').innerHTML = strengths;
+                    document.getElementById('collaborationDetail').innerHTML = collaboration;
+                    detail_img.innerHTML += `<img class="profile-picture" src="${image}" alt="프로필 사진">`;
+
+                    openModal('detailModal');
+                } else if (modalKind == 'Update') {
+                    document.getElementById('update_name').value = name;
+                    document.getElementById('update_mbti').value = mbti;
+                    document.getElementById('update_blogaddress').value = blog;
+                    document.getElementById('update_strengths').innerHTML = strengths;
+                    document.getElementById('update_collaboration').innerHTML = collaboration;
+                    document.getElementById('update_imgurl').value = image;
+
+                    openModal('memberUpdateModal');
+                }
             });
         }
 
-
+        // DOMContentLoaded 이벤트 리스너 추가
+        document.addEventListener('DOMContentLoaded', function () {
+            // edit 버튼에 이벤트 리스너 추가
+            document.getElementById('edit').addEventListener('click', function () {
+                const name = document.getElementById('nameDetail').textContent;
+                closeModal('detailModal');
+                displayMemberDetails(name, 'Update');
+            });
+        });
         // 실시간으로 팀원 데이터를 로드
         function listenToTeamMembers() {
             const membersCol = collection(db, "member");
@@ -115,11 +136,11 @@
             teamCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const name = card.querySelector('h2').textContent;
-                    displayMemberDetails(name);
-                    openModal('detailModal');
+                    displayMemberDetails(name, 'Detail');
                 });
             });
         }
+
         // 팀원 데이터를 Firestore에 추가하는 함수
         async function addTeamMember() {
             if (auth.currentUser) { // 사용자 로그인 상태 확인
@@ -147,11 +168,45 @@
             }
         }
 
+
+
         // 팀원 추가 폼 제출 이벤트 리스너
         document.querySelector('.memberAdd').addEventListener('submit', function (event) {
             event.preventDefault(); // 폼 기본 제출 방지
             addTeamMember();
         });
+
+        // 팀원 데이터를 Firestore에 추가하는 함수
+        async function updateTeamMember() {
+            if (auth.currentUser) { // 사용자 로그인 상태 확인
+                const memberData = {
+                    blog: document.getElementById('update_blogaddress').value,
+                    collaboration: document.getElementById('update_collaboration').value,
+                    image: document.getElementById('update_imgurl').value,
+                    mbti: document.getElementById('update_mbti').value,
+                    name: document.getElementById('update_name').value,
+                    strengths: document.getElementById('update_strengths').value
+                };
+
+                try {
+                    await setDoc(doc(db, "member", auth.currentUser.email), {
+                        [memberData.name]: memberData // 이름을 키로 사용하여 멤버 데이터 저장
+                    }, { merge: true });
+                    closeModal('memberUpdateModal');
+                    alert('팀원이 성공적으로 수정되었습니다.');
+                } catch (error) {
+                    console.error("팀원 추가 실패: ", error);
+                    alert('팀원 추가 실패: ' + error.message);
+                }
+            }
+        }
+
+        // 팀원 수정 폼 제출 이벤트 리스너
+        document.querySelector('.memberUpdate').addEventListener('submit', function (event) {
+            event.preventDefault(); // 폼 기본 제출 방지
+            updateTeamMember();
+        });
+
         // 회원가입
         document.getElementById('signupForm').addEventListener('submit', async function (event) {
             event.preventDefault();
@@ -337,15 +392,16 @@
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <form id="signupForm" class="register">
-            <form id="signupForm" class="register">
-                <h1>회원가입</h1>
-                <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
-                <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" /></div>
-                <div class="input-container"><input type="password" id="signUpCheckPassword"
-                        placeholder="One more password" /></div>
-                <button type="submit" class="modal-button" id="signUpButton">회원가입 하기</button>
-                <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
-            </form>
+                <form id="signupForm" class="register">
+                    <h1>회원가입</h1>
+                    <div class="input-container"> <input type="email" id="signUpEmail" placeholder="Email" /></div>
+                    <div class="input-container"><input type="password" id="signUpPassword" placeholder="Password" />
+                    </div>
+                    <div class="input-container"><input type="password" id="signUpCheckPassword"
+                            placeholder="One more password" /></div>
+                    <button type="submit" class="modal-button" id="signUpButton">회원가입 하기</button>
+                    <button type="button" class="modal-button" onclick="closeModal('signupModal')">취소</button>
+                </form>
         </div>
     </div>
 
@@ -398,7 +454,7 @@
                     <span class="title_content big">자신의 협업스타일</span>
                     <textarea class="txtfield big" id="Collaboration"></textarea>
                 </div>
-                <button type="submit" class="modal-button"  id="memberAddButton">등록하기</button>
+                <button type="submit" class="modal-button" id="memberAddButton">등록하기</button>
                 <button type="button" class="modal-button" onclick="closeModal('memberaddModal')">취소</button>
             </form>
         </div>
@@ -419,7 +475,7 @@
             <div>
                 <div id="detail_img">
                 </div>
-                <div class = "detail_head">
+                <div class="detail_head">
                     <div class="row">
                         <span class="title_content">이름</span>
                         <span class="title_content_answer" id="nameDetail">aaa</span>
@@ -445,6 +501,44 @@
             <div style="text-align:center">
                 <button type="button" class="modal-button" onclick="closeModal('detailModal')">닫기</button>
             </div>
+        </div>
+    </div>
+
+    <!-- 멤버수정 모달 -->
+    <div id="memberUpdateModal" class="modal">
+        <div class="modal-content">
+            <form class="memberUpdate">
+                <div class="modal-header">
+                    <h1>팀원 수정</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id ="btn-close"></button>
+                </div>
+                <div class="row">
+                    <span class="title_content">이미지 url</span>
+                    <input class="txtfield" type="url" id="update_imgurl" />
+                </div>
+                <div class="row">
+                    <span class="title_content">이름</span>
+                    <input class="txtfield" type="text" id="update_name" disabled />
+                </div>
+                <div class="row">
+                    <span class="title_content">mbti</span>
+                    <input class="txtfield" type="text" id="update_mbti" />
+                </div>
+                <div class="row">
+                    <span class="title_content">블로그 주소</span>
+                    <input class="txtfield" type="text" id="update_blogaddress" />
+                </div>
+                <div class="row">
+                    <span class="title_content big">자신의 장점</span>
+                    <textarea class="txtfield big" id="update_strengths"></textarea>
+                </div>
+                <div class="row">
+                    <span class="title_content big">자신의 협업스타일</span>
+                    <textarea class="txtfield big" id="update_collaboration"></textarea>
+                </div>
+                <button type="submit" class="modal-button" id="memberUpdateButton">수정하기</button>
+                <button type="button" class="modal-button" id="closebutton">취소</button>
+            </form>
         </div>
     </div>
 
@@ -513,6 +607,19 @@
         document.getElementById('memberAddBtn').addEventListener('click', function () {
             openModal('memberaddModal');
         });
+
+        // 취소 버튼 클릭 시
+        document.getElementById('closebutton').addEventListener('click', function () {
+            closeModal('memberUpdateModal');
+            openModal('detailModal');
+        });
+
+        // btn-close 버튼 클릭 시
+        document.getElementById('btn-close').addEventListener('click', function () {
+            closeModal('memberUpdateModal');
+            openModal('detailModal');
+        });
+
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -571,6 +678,7 @@
     if (catImage) catImage.style.transform = `translateX(${scrollPercent * 300}%)`;
     const iceBackground = document.querySelector('.background-image');
 });
+
 
 
     </script>
