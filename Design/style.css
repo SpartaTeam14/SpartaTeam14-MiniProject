@@ -13,8 +13,22 @@
     src: url("./font/NIXGONFONTS_M.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: "GmarketSansTTFMedium";
+    src: url("./font/GmarketSansTTFMedium.ttf") format("truetype");
+}
+
 * {
     font-family: "NIXGONFONTS_M";
+}
+
+.navbar-nav .nav-link {
+    font-family: 'GmarketSansTTFMedium', sans-serif;
+}
+
+.fade-text{
+    font-family: "NIXGONFONTS_L";
+    font-weight: bold;
 }
 
 input[type="password"]{
