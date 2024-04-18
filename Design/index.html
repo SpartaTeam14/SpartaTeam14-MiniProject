@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>14조</title>
     <link rel="stylesheet" href="style.css">
-
+  
 </head>
 
 <body>
@@ -18,7 +18,7 @@
         import firebaseConfig from '../firebaseConfig.js';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDocs, collection, onSnapshot, deleteDoc,deleteField, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDocs, collection, onSnapshot, deleteDoc, deleteField, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -133,24 +133,24 @@
             listenToTeamMembers();
         });
 
-   // 팀원 데이터를 Firestore에서 삭제하는 함수
-async function deleteTeamMember(memberEmail, memberName) {
-    try {
-        const memberRef = doc(db, "member", memberEmail);
-        // 문서에서 특정 필드만 삭제
-        await updateDoc(memberRef, {
-            [memberName]: deleteField()
-        });
-        closeModal('memberaddModal');
-        closeModal('detailModal');
-        closeModal('memberUpdateModal');
+        // 팀원 데이터를 Firestore에서 삭제하는 함수
+        async function deleteTeamMember(memberEmail, memberName) {
+            try {
+                const memberRef = doc(db, "member", memberEmail);
+                // 문서에서 특정 필드만 삭제
+                await updateDoc(memberRef, {
+                    [memberName]: deleteField()
+                });
+                closeModal('memberaddModal');
+                closeModal('detailModal');
+                closeModal('memberUpdateModal');
 
-        listenToTeamMembers(); // UI에서도 해당 멤버 카드를 삭제
-    } catch (error) {
-        console.error("팀원 삭제 실패: ", error);
-        alert('팀원 삭제 실패: ' + error.message);
-    }
-}
+                listenToTeamMembers(); // UI에서도 해당 멤버 카드를 삭제
+            } catch (error) {
+                console.error("팀원 삭제 실패: ", error);
+                alert('팀원 삭제 실패: ' + error.message);
+            }
+        }
 
 
 
@@ -216,7 +216,7 @@ async function deleteTeamMember(memberEmail, memberName) {
                     closeModal('detailModal');
 
                     alert('팀원이 성공적으로 추가되었습니다.');
-                  
+
 
                 } catch (error) {
                     console.error("팀원 추가 실패: ", error);
@@ -235,10 +235,10 @@ async function deleteTeamMember(memberEmail, memberName) {
                     const memberName = document.getElementById('nameDetail').textContent.trim();
                     const memberEmail = auth.currentUser.email; // 현재 로그인한 사용자의 이메일
                     if (confirm('해당 카드을 정말 삭제하시겠습니까?')) {
-        deleteTeamMember(memberEmail, memberName);
-    }
+                        deleteTeamMember(memberEmail, memberName);
+                    }
 
-                  
+
                 });
             }
         });
@@ -370,10 +370,10 @@ async function deleteTeamMember(memberEmail, memberName) {
 
             }
         });
-      
 
 
-        
+
+
         function validateLoginButton() {
             const email = document.getElementById('signInEmail').value;
             const password = document.getElementById('signInPassword').value;
@@ -674,17 +674,17 @@ async function deleteTeamMember(memberEmail, memberName) {
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
             // 로그인 모달을 닫을 때 추가 로직
-    if (modalId === 'loginModal') {
-        // 입력 필드 초기화
-        document.getElementById('signInEmail').value = '';
-        document.getElementById('signInPassword').value = '';
-        
-        // 에러 메시지 숨기기
-        document.getElementById('loginError').style.display = 'none';
-    }else {
-        document.getElementById(modalId).style.display = 'none';
+            if (modalId === 'loginModal') {
+                // 입력 필드 초기화
+                document.getElementById('signInEmail').value = '';
+                document.getElementById('signInPassword').value = '';
 
-    }
+                // 에러 메시지 숨기기
+                document.getElementById('loginError').style.display = 'none';
+            } else {
+                document.getElementById(modalId).style.display = 'none';
+
+            }
         }
 
         document.getElementById('signupBtn').addEventListener('click', function () {
