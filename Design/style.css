@@ -454,6 +454,7 @@ textarea {
     position: relative;
     height: 60vh;
     overflow: hidden;
+    max-width: 100%;
 }
 
 .cat-image {
@@ -615,7 +616,14 @@ body {
     padding: 10px;
 }
 
-
+/* 자기소개페이지 모달버튼 */
+.modal-button-detail {
+    width: 21px;
+    height: 21px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
 
 .modal-button {
     padding: 1%;
