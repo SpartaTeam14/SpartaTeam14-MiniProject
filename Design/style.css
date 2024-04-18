@@ -360,13 +360,11 @@ header {
 }
 
 .memberAdd {
-    width: 400px;
-    margin: 0 auto;
+    margin: 0 5%;
 }
 
 .memberUpdate {
-    width: 400px;
-    margin: 0 auto;
+    margin: 0 5%;
 }
 
 .title_content {
