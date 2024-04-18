@@ -26,7 +26,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        $("#detailBtn").click(async function () {
+        function displayMemberDetails(memberName) {
             const membersCol = collection(db, "member");
             onSnapshot(membersCol, (snapshot) => {
                 const memberList = [];
@@ -35,36 +35,30 @@
                     for (const key in data) {
                         if (data.hasOwnProperty(key)) {
                             memberList.push(data[key]);
-
                         }
                     }
                 });
-                const filteredData = memberList.filter(item => item.name === '김세림'); //여기에 누른 카드의 이름값 넣어야함
-
+                // 클릭된 팀 카드의 이름으로 데이터 필터링
+                const filteredData = memberList.filter(item => item.name.trim() === memberName.trim()); //공백제거
                 // 필터링된 요소들의 value 값을 변수에 할당
                 let name, mbti, strengths, collaboration, image, blog;
                 detail_img.innerHTML = ``;
-
                 filteredData.forEach(item => {
                     name = item.name;
                     mbti = item.mbti;
                     strengths = item.strengths;
                     collaboration = item.collaboration;
-                    image = item.image || 'images/purple.png';
+                    image = item.image;
                     blog = item.blog;
                 });
-
                 document.getElementById('nameDetail').innerHTML = name;
                 document.getElementById('mbtiDetail').innerHTML = mbti;
-                document.getElementById('blogDetail').innerHTML = blog;
+                document.getElementById('blogDetail').innerHTML = `<a href="${blog}">${blog}</a>`;
                 document.getElementById('strengthsDetail').innerHTML = strengths;
                 document.getElementById('collaborationDetail').innerHTML = collaboration;
-                let temp_html = `<img class="profile-picture" src="${image}" alt="프로필 사진">`;
-
-                detail_img.innerHTML += temp_html;
-
+                detail_img.innerHTML += `<img class="profile-picture" src="${image}" alt="프로필 사진">`;;
             });
-        });
+        }
 
 
         // 실시간으로 팀원 데이터를 로드
@@ -107,14 +101,13 @@
 
                     <img src="${imageUrl}">
                     <div class="profile-contents">
-                        <h2>${member.name} </h2><h4><span>${member.mbti}</span></h4>
+                        <h2>${member.name}</h2><h4><span>${member.mbti}</span></h4>
                         <p>${member.strengths}</p>
                     </div>
                 </div>
             </li>`;
                 teamContainer.innerHTML += memberHtml;
             });
-            console.log(member.mbti);
             addClickListenersToTeamItems();
         }
         function addClickListenersToTeamItems() {
@@ -122,8 +115,8 @@
             teamCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const name = card.querySelector('h2').textContent;
+                    displayMemberDetails(name);
                     openModal('detailModal');
-                    alert('클릭한 팀원: ' + name);
                 });
             });
         }
@@ -335,7 +328,6 @@
     <hr>
     <div class="membtn-container">
         <button type="button" id="memberAddBtn">팀원 추가</button>
-        <button type="button" id="detailBtn">팀원 자세히</button>
     </div>
     <div id="member" class="wrapper">
         </ul>
@@ -426,7 +418,7 @@
             <div>
                 <div id="detail_img">
                 </div>
-                <div style="display:inline-block; margin:20px">
+                <div class = "detail_head">
                     <div class="row">
                         <span class="title_content">이름</span>
                         <span class="title_content_answer" id="nameDetail">aaa</span>
@@ -519,9 +511,6 @@
 
         document.getElementById('memberAddBtn').addEventListener('click', function () {
             openModal('memberaddModal');
-        });
-        document.getElementById('detailBtn').addEventListener('click', function () {
-            openModal('detailModal');
         });
         // DOM이 완전히 로드된 후 이벤트 리스너 추가
         document.addEventListener('DOMContentLoaded', () => {

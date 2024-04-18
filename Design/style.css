@@ -305,6 +305,11 @@ header {
     padding: 10px 0;
 }
 
+.row a{
+    text-decoration: none; /* 링크의 밑줄 제거 */  
+    color: inherit; /* 링크의 색상 제거 */
+}
+
 .memberAdd{
     width: 400px;
     margin: 0 auto;
@@ -558,4 +563,13 @@ textarea {
 
 #detail_img{
    margin-top: 10px;
+   width: 200px;
+}
+
+.detail_head{
+    display:inline-block; 
+    width: calc(100% - 300px);
+    /* 이미지 너비에는 실제 이미지의 너비를 넣어주셔야 합니다. */
+    padding-right: 0; /* 또는 여러분이 원하는 값으로 설정 */
+    /* 기타 스타일링 */
 }
