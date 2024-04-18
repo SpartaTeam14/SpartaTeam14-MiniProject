@@ -17,21 +17,16 @@
     font-family: "NIXGONFONTS_M";
 }
 
-input[type="password"] {
-    font-family: "Arial", sans-serif;
-    /* 비밀번호 입력란의 기본 폰트 */
+input[type="password"]{
+    font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
 }
 
-input[type="email"] {
-    font-family: "Arial", sans-serif;
-    /* 비밀번호 입력란의 기본 폰트 */
+input[type="email"]{
+    font-family: "Arial", sans-serif; /* 비밀번호 입력란의 기본 폰트 */
 }
 
 .team-description p {
-    font-size: 20px;
-    /* 여기에 적절한 폰트 크기를 입력하세요 */
-    font-family: "NIXGONFONTS_B";
-    margin-top: 22px;
+    font-size: 22px; /* 여기에 적절한 폰트 크기를 입력하세요 */
 }
 
 body::-webkit-scrollbar {
@@ -199,7 +194,7 @@ header {
     font-size: 35px;
 }
 
-.profile-contents h2 span {
+.profile-contents h4 span {
     display: block;
     font-size: 22px;
 }
@@ -262,7 +257,7 @@ header {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2000;
     left: 0;
     top: 0;
     width: 100%;
@@ -298,7 +293,7 @@ header {
     /* 원하는 여백 크기로 조정 */
 }
 
-.input-container input {
+.input-container input{
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -310,12 +305,17 @@ header {
     padding: 10px 0;
 }
 
-.memberAdd {
+.row a{
+    text-decoration: none; /* 링크의 밑줄 제거 */  
+    color: inherit; /* 링크의 색상 제거 */
+}
+
+.memberAdd{
     width: 400px;
     margin: 0 auto;
 }
 
-.title_content {
+.title_content{
     display: flex;
     align-items: center;
     width: 30%;
@@ -330,7 +330,7 @@ header {
     height: 40px;
 }
 
-.txtfield {
+.txtfield{
     width: 70%;
     height: 38px;
     font-size: 13px;
@@ -338,11 +338,11 @@ header {
     box-sizing: border-box;
 }
 
-.txtfield.big {
+.txtfield.big{
     height: 150px;
 }
 
-.title_content.big {
+.title_content.big{
     height: 150px;
 }
 
@@ -350,28 +350,21 @@ textarea {
     resize: none;
 }
 
-.membtn-container {
+.membtn-container{
     text-align: center;
 }
 
 #memberAddBtn {
-    background-color: #D9BDAD;
-    /* 새로운 배경색 지정 */
-    color: white;
-    /* 텍스트 색상을 밝게 설정하여 대비를 높임 */
-    border: none;
-    /* 테두리 제거 */
-    padding: 10px 20px;
-    /* 적절한 패딩값 추가 (예시) */
-    border-radius: 5px;
-    /* 버튼 모서리를 둥글게 만듦 */
-    cursor: pointer;
-    /* 마우스 커서를 포인터로 변경 */
+    background-color: #D9BDAD; /* 새로운 배경색 지정 */
+    color: white; /* 텍스트 색상을 밝게 설정하여 대비를 높임 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 20px; /* 적절한 패딩값 추가 (예시) */
+    border-radius: 5px; /* 버튼 모서리를 둥글게 만듦 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
 }
 
 #memberAddBtn:hover {
-    background-color: #d9b29c;
-    /* 마우스 오버 시 배경색 변경 */
+    background-color: #d9b29c; /* 마우스 오버 시 배경색 변경 */
 }
 
 /* moveTop 버튼 */
@@ -408,6 +401,123 @@ textarea {
     background-image: url(./images/btn-moveBottom-hover.jpg);
 }
 
+  /* 스크롤에 따른 헤더 변화를 위한 스타일 */
+  .container {
+    position: relative;
+    height: 60vh;
+    overflow: hidden;
+}
+
+.cat-image {
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    bottom: 0;
+    background-image: url(./images/cat-image.png); /* 고양이 이미지 */
+    background-size: contain;
+    background-repeat: no-repeat; /* 이미지가 반복x 설정 */
+    background-position: center; /* 이미지가 중앙에 위치하도록 설정 */
+    z-index: 1;
+}
+.text-content {
+    position: absolute;
+    width: 100%;
+    top: 55%; /* 중앙 위치 조정 */
+    transform: translateY(-50%); /* Y축 기준 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 28px;
+    z-index: 2;
+    transition: transform 0.2s ease-out; /* 이동 속도 빠르게 */
+}
+
+.fade-text {
+    opacity: 0;
+    transition: opacity 0.5s ease-out, transform 0.3s ease-out; /* 투명도 및 위치 변화 속도 조정 */
+    transform: translateY(-20px); /* 초기 위치 설정 */
+}
+.fade-text:last-child { /* 마지막 p 태그만 특별하게 */
+    font-size: 36px; 
+    font-weight: bold; 
+    color: rgb(130, 94, 94);
+}
+@keyframes background-image {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  body {
+    background: radial-gradient(ellipse at center, #fffeea 0%, #fffeea 35%, #B7E8EB 100%);
+    position: relative;
+  }
+  .ocean {
+    height: 5%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #015871;
+  }
+  
+  .wave {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x;
+    position: absolute;
+    top: -198px;
+    width: 6400px;
+    height: 198px;
+    animation: wave 6s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .wave:nth-of-type(2) {
+    top: -175px;
+    animation: wave 7s cubic-bezier(0.4, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+    opacity: 1;
+  }
+  
+  .wave:nth-of-type(3) {
+    top: -150px;
+    animation: wave 8s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.25s infinite, swell 8s ease -1.5s infinite;
+    opacity: 0.8;
+  }
+  
+  .wave:nth-of-type(4) {
+    top: -125px;
+    animation: wave 9s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.375s infinite, swell 9s ease -1.75s infinite;
+    opacity: 0.6;
+  }
+  
+  @keyframes wave {
+    0% {
+      margin-left: 0;
+    }
+    100% {
+      margin-left: -1600px;
+    }
+  }
+  
+  @keyframes swell {
+    0%, 100% {
+      transform: translate3d(0, -35px, 0);
+    }
+    250% {
+        transform: translate3d(0, -15px, 0);
+      }
+    50% {
+      transform: translate3d(0, 50px, 0);
+    }
+  }
+
+  
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -453,4 +563,13 @@ textarea {
 
 #detail_img{
    margin-top: 10px;
+   width: 200px;
+}
+
+.detail_head{
+    display:inline-block; 
+    width: calc(100% - 300px);
+    /* 이미지 너비에는 실제 이미지의 너비를 넣어주셔야 합니다. */
+    padding-right: 0; /* 또는 여러분이 원하는 값으로 설정 */
+    /* 기타 스타일링 */
 }
