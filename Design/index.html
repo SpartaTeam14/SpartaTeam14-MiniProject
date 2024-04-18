@@ -266,8 +266,7 @@ async function deleteTeamMember(memberEmail, memberName) {
                     await setDoc(doc(db, "member", auth.currentUser.email), {
                         [memberData.name]: memberData // 이름을 키로 사용하여 멤버 데이터 저장
                     }, { merge: true });
-                   
-
+                    closeModal('memberUpdateModal');
                     alert('팀원이 성공적으로 수정되었습니다.');
                 } catch (error) {
                     console.error("팀원 추가 실패: ", error);
@@ -674,6 +673,18 @@ async function deleteTeamMember(memberEmail, memberName) {
 
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
+            // 로그인 모달을 닫을 때 추가 로직
+    if (modalId === 'loginModal') {
+        // 입력 필드 초기화
+        document.getElementById('signInEmail').value = '';
+        document.getElementById('signInPassword').value = '';
+        
+        // 에러 메시지 숨기기
+        document.getElementById('loginError').style.display = 'none';
+    }else {
+        document.getElementById(modalId).style.display = 'none';
+
+    }
         }
 
         document.getElementById('signupBtn').addEventListener('click', function () {
