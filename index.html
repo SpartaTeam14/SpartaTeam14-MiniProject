@@ -8,14 +8,14 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>14조</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Design/style.css">
 
 </head>
 
 <body>
     <!-- firebase 콘솔 -->
     <script type="module">
-        import firebaseConfig from '../firebaseConfig.js';
+        import firebaseConfig from './js/firebaseConfig.js';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, getDocs, collection, onSnapshot, deleteDoc, deleteField, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -167,7 +167,7 @@
 
             Object.values(members).forEach(member => {
                 // 이미지 URL이 유효한지 확인하고, 없으면 기본이미지사용
-                const imageUrl = member.image || 'images/purple.png';
+                const imageUrl = member.image || 'Design/images/purple.png';
                 const randomColorClass = colors[Math.floor(Math.random() * colors.length)];
 
                 const memberHtml = `
