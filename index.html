@@ -593,8 +593,9 @@
             <form class="memberUpdate">
                 <div class="modal-header">
                     <h1>팀원 수정</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"
-                        onclick="closeModal('memberUpdateModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close" 
+                    onclick="closeModal('memberUpdateModal')"></button>
+
                 </div>
                 <div class="row">
                     <span class="title_content">이미지 url</span>
@@ -621,8 +622,7 @@
                     <textarea class="txtfield big" id="update_collaboration"></textarea>
                 </div>
                 <button type="submit" class="modal-button" id="memberUpdateButton">수정하기</button>
-                <button type="button" class="modal-button" id="closebutton"
-                    onclick="closeModal('memberUpdateModal')">취소</button>
+                <button type="button" class="modal-button" id="closebutton" onclick="closeModal('memberUpdateModal')">취소</button>
             </form>
         </div>
     </div>
@@ -755,7 +755,7 @@
                 if (modalId === 'loginModal' || modalId === 'signupModal') {
                     const button = modal.querySelector('.modal-button');
                     button.disabled = true;
-                } else if (modalId === 'memberaddModal' || modalId === 'memberUpdateModal') {
+                } else if (modalId === 'memberaddModal') {
                     const button = modal.querySelector('.modal-button');
                     button.disabled = true;
                 }
