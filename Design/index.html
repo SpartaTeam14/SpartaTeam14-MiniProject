@@ -456,7 +456,7 @@
         <div class="background-image" id="team"></div>
         <div class="cat-image" id="cat-image"></div>
         <div class="text-content">
-            <p class="fade-text"> 꽁꽁 얼어붙은 한강 위를 고양이가 걸어다닙니다 </p>
+            <p class="fade-text"> 꽁꽁 얼어붙은 한강 위로 고양이가 걸어다닙니다 </p>
             <p class="fade-text"> 저희는 멋진 백엔드 개발자가 되는것을 목표를 가진 "꽁냥이" 조입니다 </p>
             <p class="fade-text"> 꽁냥이 동료가 되실분은 팀원카드를 작성해주세요! </p>
             <p class="fade-text"> 우리 모두 앞으로 파이팅!!! </p>
@@ -743,53 +743,50 @@
         }
 
         function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    modal.style.display = 'none';
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
 
-    // 모든 입력 필드 초기화 및 버튼 비활성화
-    if (modalId === 'loginModal' || modalId === 'signupModal' || modalId === 'memberaddModal' || modalId === 'memberUpdateModal') {
-        const inputs = modal.querySelectorAll('input');
-        inputs.forEach(input => {
-            input.value = ''; // 모든 입력 필드를 비웁니다.
-        });
+            if (modalId === 'loginModal' || modalId === 'signupModal' || modalId === 'memberaddModal' || modalId === 'memberUpdateModal') {
+                const inputs = modal.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.value = '';
+                });
 
-        // 특정 조건에 따른 버튼 비활성화 처리
-        if (modalId === 'loginModal' || modalId === 'signupModal') {
-            const button = modal.querySelector('.modal-button');
-            button.disabled = true; // 로그인, 회원가입 버튼 비활성화
-        } else if (modalId === 'memberaddModal' || modalId === 'memberUpdateModal') {
-            const button = modal.querySelector('.modal-button');
-            button.disabled = true; // 팀원 추가 또는 수정 버튼 비활성화
+                if (modalId === 'loginModal' || modalId === 'signupModal') {
+                    const button = modal.querySelector('.modal-button');
+                    button.disabled = true;
+                } else if (modalId === 'memberaddModal' || modalId === 'memberUpdateModal') {
+                    const button = modal.querySelector('.modal-button');
+                    button.disabled = true;
+                }
+            }
+
+            if (modalId === 'loginModal') {
+                const loginError = document.getElementById('loginError');
+                if (loginError) {
+                    loginError.style.display = 'none';
+                }
+            }
+
+            // 모달 특정 상태 리셋
+            resetModalState(modalId);
         }
-    }
 
-    // 에러 메시지 숨김 처리 (로그인 모달의 경우)
-    if (modalId === 'loginModal') {
-        const loginError = document.getElementById('loginError');
-        if (loginError) {
-            loginError.style.display = 'none';
+        // 모달 특정 상태를 리셋하는 함수
+        function resetModalState(modalId) {
+            switch (modalId) {
+                case 'loginModal':
+                    validateLoginForm();
+                    break;
+                case 'signupModal':
+                    validateSignUpForm();
+                    break;
+                case 'memberaddModal':
+                case 'memberUpdateModal':
+                    validateAddMemberForm();
+                    break;
+            }
         }
-    }
-
-    // 모달 특정 상태 리셋
-    resetModalState(modalId);
-}
-
-// 모달 특정 상태를 리셋하는 함수
-function resetModalState(modalId) {
-    switch (modalId) {
-        case 'loginModal':
-            validateLoginForm();
-            break;
-        case 'signupModal':
-            validateSignUpForm();
-            break;
-        case 'memberaddModal':
-        case 'memberUpdateModal':
-            validateAddMemberForm();
-            break;
-    }
-}
 
 
         document.getElementById('signupBtn').addEventListener('click', function () {
