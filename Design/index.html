@@ -673,6 +673,43 @@
         let moveToBottom = function () {
             document.body.scrollIntoView({ behavior: "smooth", block: "end" });
         };
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+    validateLoginForm();
+    validateSignUpForm();
+    validateAddMemberForm(); // 팀원 추가 폼 검증 함수 호출
+
+    document.getElementById('signInEmail').addEventListener('input', validateLoginForm);
+    document.getElementById('signInPassword').addEventListener('input', validateLoginForm);
+
+    document.getElementById('signUpEmail').addEventListener('input', validateSignUpForm);
+    document.getElementById('signUpPassword').addEventListener('input', validateSignUpForm);
+    document.getElementById('signUpCheckPassword').addEventListener('input', validateSignUpForm);
+
+    document.getElementById('name').addEventListener('input', validateAddMemberForm); 
+});
+
+function validateLoginForm() {
+    const email = document.getElementById('signInEmail').value;
+    const password = document.getElementById('signInPassword').value;
+    document.getElementById('signInButton').disabled = !email || !password;
+}
+
+function validateSignUpForm() {
+    const email = document.getElementById('signUpEmail').value;
+    const password = document.getElementById('signUpPassword').value;
+    const passwordConfirm = document.getElementById('signUpCheckPassword').value;
+    const isPasswordsMatch = password === passwordConfirm && password.length > 0;
+    document.getElementById('signUpButton').disabled = !email || !isPasswordsMatch;
+}
+
+function validateAddMemberForm() {
+    const name = document.getElementById('name').value;
+    document.getElementById('memberAddButton').disabled = !name; // 이름이 비어있으면 버튼 비활성화
+}
+
         const signUpPassword = document.getElementById('signUpPassword');
         const signUpCheckPassword = document.getElementById('signUpCheckPassword');
         const signUpButton = document.getElementById('signUpButton');
@@ -747,8 +784,6 @@
             });
 
         });
-
-
 
 
         window.addEventListener('scroll', () => {

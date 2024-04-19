@@ -697,6 +697,20 @@ body {
     transition: background-color 0.3s;
 }
 
+/* 활성화된 버튼 스타일 */
+.modal-button:not(:disabled) {
+    background-color:  #d9b29c; 
+    color: #ffffff;
+}
+
+/* 비활성화된 버튼 스타일 */
+.modal-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+
 .modal-button:hover {
     background-color: #c18b79;
 }
