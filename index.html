@@ -57,7 +57,7 @@
                     mbti = item.mbti;
                     strengths = item.strengths;
                     collaboration = item.collaboration;
-                    image = item.image || 'Design/images/cat_default.jpg';
+                    image = item.image;
                     blog = item.blog;
                     console.log(item.email)
                     if (item.email && currentUserEmail && item.email === currentUserEmail) {
@@ -71,6 +71,9 @@
                     document.getElementById('blogDetail').innerHTML = `<a href="${blog}" target="_blank">${blog}</a>`;
                     document.getElementById('strengthsDetail').innerHTML = strengths;
                     document.getElementById('collaborationDetail').innerHTML = collaboration;
+                    if (image == ""){
+                        image = 'Design/images/cat_default.jpg'
+                    }
                     detail_img.innerHTML += `<img class="profile-picture" src="${image}" alt="프로필 사진">`;
 
                     const editButton = document.getElementById('edit');
