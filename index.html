@@ -87,7 +87,6 @@
                         editButton.style.display = 'none';
                         deleteButton.style.display = 'none';
                     }
-                    openModal('detailModal');
                 } else if (modalKind == 'Update') {
                     document.getElementById('update_name').value = name;
                     document.getElementById('update_mbti').value = mbti;
@@ -96,7 +95,6 @@
                     document.getElementById('update_collaboration').innerHTML = collaboration;
                     document.getElementById('update_imgurl').value = image;
 
-                    openModal('memberUpdateModal');
                 }
             });
         }
@@ -108,6 +106,7 @@
                 const name = document.getElementById('nameDetail').textContent;
                 closeModal('detailModal');
                 displayMemberDetails(name, 'Update');
+                openModal('memberUpdateModal');
             });
         });
 
@@ -192,6 +191,7 @@
                 card.addEventListener('click', () => {
                     const name = card.querySelector('h2').textContent;
                     displayMemberDetails(name, 'Detail');
+                    openModal('detailModal');
                 });
             });
         }
