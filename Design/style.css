@@ -715,6 +715,17 @@ body {
     background-color: #c18b79;
 }
 
+/* 버튼 비활성화(disabled) 상태 스타일 */
+.modal-button:disabled {
+    background-color: #cccccc; 
+    color: #666666;
+    cursor: not-allowed; 
+}
+
+.modal-button:disabled:hover {
+    background-color: #cccccc; 
+}
+
 .teamGoal {
     text-align: left;
     padding: 20px;
