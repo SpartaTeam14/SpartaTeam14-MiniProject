@@ -856,9 +856,15 @@
             });
 
             // 고양이 이미지와 배경 이미지 이동 애니메이션 유지
-            const catImage = document.querySelector('.cat-image');
-            if (catImage) catImage.style.transform = `translateX(${scrollPercent * 300}%)`;
-            const iceBackground = document.querySelector('.background-image');
+            
+            setTimeout(() => {
+        const catImage = document.querySelector('.cat-image');
+        if (catImage) {
+            // Apply a smoother transition effect
+            catImage.style.transition = 'transform 0.5s ease-out';
+            catImage.style.transform = `translateX(${scrollPercent * 200}%)`;
+        }
+    }, 100);
         });
 
     </script>
