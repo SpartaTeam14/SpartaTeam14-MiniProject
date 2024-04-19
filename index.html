@@ -57,7 +57,7 @@
                     mbti = item.mbti;
                     strengths = item.strengths;
                     collaboration = item.collaboration;
-                    image = item.image;
+                    image = item.image || 'Design/images/cat_default.jpg';
                     blog = item.blog;
                     console.log(item.email)
                     if (item.email && currentUserEmail && item.email === currentUserEmail) {
@@ -166,7 +166,7 @@
 
             Object.values(members).forEach(member => {
                 // 이미지 URL이 유효한지 확인하고, 없으면 기본이미지사용
-                const imageUrl = member.image || 'Design/images/purple.png';
+                const imageUrl = member.image || 'Design/images/cat_default.jpg';
                 const randomColorClass = colors[Math.floor(Math.random() * colors.length)];
 
                 const memberHtml = `
