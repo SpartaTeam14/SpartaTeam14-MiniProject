@@ -743,20 +743,54 @@
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            // 로그인 모달을 닫을 때 추가 로직
-            if (modalId === 'loginModal') {
-                // 입력 필드 초기화
-                document.getElementById('signInEmail').value = '';
-                document.getElementById('signInPassword').value = '';
+    const modal = document.getElementById(modalId);
+    modal.style.display = 'none';
 
-                // 에러 메시지 숨기기
-                document.getElementById('loginError').style.display = 'none';
-            } else {
-                document.getElementById(modalId).style.display = 'none';
+    // 모든 입력 필드 초기화 및 버튼 비활성화
+    if (modalId === 'loginModal' || modalId === 'signupModal' || modalId === 'memberaddModal' || modalId === 'memberUpdateModal') {
+        const inputs = modal.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.value = ''; // 모든 입력 필드를 비웁니다.
+        });
 
-            }
+        // 특정 조건에 따른 버튼 비활성화 처리
+        if (modalId === 'loginModal' || modalId === 'signupModal') {
+            const button = modal.querySelector('.modal-button');
+            button.disabled = true; // 로그인, 회원가입 버튼 비활성화
+        } else if (modalId === 'memberaddModal' || modalId === 'memberUpdateModal') {
+            const button = modal.querySelector('.modal-button');
+            button.disabled = true; // 팀원 추가 또는 수정 버튼 비활성화
         }
+    }
+
+    // 에러 메시지 숨김 처리 (로그인 모달의 경우)
+    if (modalId === 'loginModal') {
+        const loginError = document.getElementById('loginError');
+        if (loginError) {
+            loginError.style.display = 'none';
+        }
+    }
+
+    // 모달 특정 상태 리셋
+    resetModalState(modalId);
+}
+
+// 모달 특정 상태를 리셋하는 함수
+function resetModalState(modalId) {
+    switch (modalId) {
+        case 'loginModal':
+            validateLoginForm();
+            break;
+        case 'signupModal':
+            validateSignUpForm();
+            break;
+        case 'memberaddModal':
+        case 'memberUpdateModal':
+            validateAddMemberForm();
+            break;
+    }
+}
+
 
         document.getElementById('signupBtn').addEventListener('click', function () {
             openModal('signupModal');
